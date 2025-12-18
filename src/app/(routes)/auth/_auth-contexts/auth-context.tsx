@@ -1,6 +1,6 @@
 "use client";
 
-import {  protectedRoutes } from "@/app/lib/utils";
+import {  protectedRoutes } from "@/lib/utils";
 import { useRouter, usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -47,9 +47,7 @@ export const AuthContextProvider = ({
 
   useEffect(() => {
     const validateSession = async () => {
-      setLoading(true);
       const response = await fetch("/api/validate-session");
-
       //re-direct user to home page if session is invalid and 
       //is trying to access protected routes
       if (!response.ok&&protectedRoutes.includes(pathname)) {
@@ -58,7 +56,7 @@ export const AuthContextProvider = ({
       }
       const { user } = await response.json();
       setUser(user);
-      setLoading(false);
+    
     };
    
       validateSession();
@@ -76,6 +74,7 @@ export const AuthContextProvider = ({
     email: string;
     password: string;
   }) => {
+    setError(null);
     setLoading(true);
     const response = await fetch("/api/login", {
       method: "POST",

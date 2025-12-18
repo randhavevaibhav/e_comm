@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "../context/auth-context";
+import { useAuth } from "../_auth-contexts/auth-context";
 import { MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -8,13 +8,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   loginFormSchema,
   loginFormSchemaType,
-} from "@/app/schemas/auth-schema";
+} from "@/app/zod-schemas/auth-schema";
 import { ErrorMessage } from "@/app/components/ui/error-message";
-import { cn } from "@/app/lib/utils";
-import { InputContainer } from "./auth-form";
+import { cn } from "@/lib/utils";
+import { FormError, InputContainer } from "./auth-form";
 import { Input } from "@/app/components/ui/input";
 import toast from "react-hot-toast";
 import { Logo } from "@/app/components/logo";
+import { useEffect } from "react";
+import { Button } from "@/app/components/ui/button";
 
 type LoginFormProps = {
   setUserAuthStateToSignup: () => void;
@@ -23,7 +25,25 @@ type LoginFormProps = {
 export const LoginForm = ({ setUserAuthStateToSignup }: LoginFormProps) => {
   const { loading, error, login, clearError } = useAuth();
 
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(loginFormSchema),
+  });
+
+  useEffect(() => {
+    //clear form if we get error from server
+    if (error) {
+      reset();
+    }
+  }, [error]);
+
   const onSubmit = async (data: loginFormSchemaType) => {
+    //clear any errors from previous login attempt
+    clearError();
     const email = data.email;
     const password = data.password;
 
@@ -39,15 +59,6 @@ export const LoginForm = ({ setUserAuthStateToSignup }: LoginFormProps) => {
     }
   };
 
-  const {
-    handleSubmit,
-    register,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(loginFormSchema),
-  });
-
   const emailFieldErrors = errors.email?.message;
   const passwordFieldErrors = errors.password?.message;
 
@@ -56,9 +67,9 @@ export const LoginForm = ({ setUserAuthStateToSignup }: LoginFormProps) => {
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-1 sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white"
     >
-      <header className="my-4">
+      <header className="my-4" data-test={`login-header`}>
         <div className="w-full">
-          <Logo className="mx-auto mb-6"/>
+          <Logo className="mx-auto mb-6" />
         </div>
 
         <h1 className="text-gray-900 text-3xl  font-medium">Login</h1>
@@ -68,7 +79,6 @@ export const LoginForm = ({ setUserAuthStateToSignup }: LoginFormProps) => {
       <InputContainer loading={loading}>
         <MailIcon size={"18px"} className="text-[#6B7280]" />
         <Input
-          type="email"
           placeholder="Email id"
           disabled={loading}
           autoComplete="email"
@@ -76,6 +86,7 @@ export const LoginForm = ({ setUserAuthStateToSignup }: LoginFormProps) => {
           className={cn({
             "cursor-not-allowed": loading,
           })}
+          data-test={`email-input`}
         />
       </InputContainer>
 
@@ -87,6 +98,7 @@ export const LoginForm = ({ setUserAuthStateToSignup }: LoginFormProps) => {
           },
           "ml-2"
         )}
+         data-test={`email-input-error`}
       >
         {emailFieldErrors ? emailFieldErrors : `Errors`}
       </ErrorMessage>
@@ -102,6 +114,7 @@ export const LoginForm = ({ setUserAuthStateToSignup }: LoginFormProps) => {
           className={cn({
             "cursor-not-allowed": loading,
           })}
+          data-test={`password-input`}
         />
       </InputContainer>
 
@@ -113,6 +126,7 @@ export const LoginForm = ({ setUserAuthStateToSignup }: LoginFormProps) => {
           },
           "ml-2"
         )}
+        data-test={`password-input-error`}
       >
         {passwordFieldErrors ? passwordFieldErrors : `Errors`}
       </ErrorMessage>
@@ -120,12 +134,9 @@ export const LoginForm = ({ setUserAuthStateToSignup }: LoginFormProps) => {
       {/* <div className="mt-4 text-left text-indigo-500">
                     <button className="text-sm" type="reset">Forget password?</button>
                 </div> */}
-      <button
-        type="submit"
-        className="w-full h-11 rounded-full text-white bg-indigo-500 hover:opacity-90 transition-opacity cursor-pointer"
-      >
+      <Button type="submit" size="lg" disabled={loading} className={`w-full`}  data-test={`login-btn`}>
         Login
-      </button>
+      </Button>
       <p className="text-gray-500 text-sm ">
         Don't have an account?
         <button
@@ -135,23 +146,13 @@ export const LoginForm = ({ setUserAuthStateToSignup }: LoginFormProps) => {
             setUserAuthStateToSignup();
             clearError();
           }}
+          data-test={`signup-form-btn`}
         >
           &nbsp;click here
         </button>
       </p>
 
-      <ErrorMessage
-        className={cn(
-          {
-            "opacity-100 visible": true,
-            "opacity-0 invisible": !error,
-          },
-          "text-center mb-2"
-        )}
-      >
-        <p>Error while submitting form !!</p>
-        <p>{error}</p>
-      </ErrorMessage>
+      <FormError error={error}/>
     </form>
   );
 };

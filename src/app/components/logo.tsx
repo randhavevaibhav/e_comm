@@ -1,7 +1,7 @@
 import { ClassValue } from "clsx";
 import Image from "next/image";
 import { Link } from "react-transition-progress/next";
-import { cn } from "../lib/utils";
+import { cn } from "../../lib/utils";
 
 type LogoProps ={
     className?:ClassValue

@@ -1,15 +1,17 @@
 import { cookies } from "next/headers";
-import {  NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { findUser } from "@/services/user.service";
 import bcrypt from "bcrypt";
-import { apiGlobalErrorHandler } from "@/app/lib/api-global-error-handler";
-import {loginFormSchema} from "@/app/schemas/auth-schema"
+import { apiGlobalErrorHandler } from "@/lib/api-global-error-handler";
+import { loginFormSchema } from "@/app/zod-schemas/auth-schema";
+import { withRateLimit } from "@/lib/rate-limiter";
 
-export const POST = apiGlobalErrorHandler(async(request)=>{
+export const POST = apiGlobalErrorHandler(
+  withRateLimit(async (request) => {
     const body = await request.json();
 
-    //fields sanitization is handle by zod schema if anything goes wrong 
+    //fields sanitization is handle by zod schema if anything goes wrong
     //zod Error is thrown which is handle by apiGlobalErrorHandler
     const validateData = loginFormSchema.parse(body);
 
@@ -75,5 +77,5 @@ export const POST = apiGlobalErrorHandler(async(request)=>{
         headers: { "Content-Type": "application/json" },
       }
     );
-  
-});
+  })
+);

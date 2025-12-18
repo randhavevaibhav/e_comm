@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 import { ClassValue } from "clsx";
 import { ComponentPropsWithRef, forwardRef } from "react";
 
@@ -9,12 +9,13 @@ type ButtonProps = ComponentPropsWithRef<"button"> & {
   children: React.ReactNode;
   className?: ClassValue;
   variant?: VariantType;
+  size?:"sm"|"md"|"lg"|"xl"
 };
 
 const getVariantClasses = (variant:VariantType = "default") => {
   const variants = {
     outline: "bg-inherit text-inherit border rounded-md",
-    default: "bg-indigo-500 hover:bg-indigo-600",
+    default: "bg-indigo-500 hover:bg-indigo-600 hover:opacity-90 transition-opacity",
     ghost:"bg-inherit text-inherit"
   };
 
@@ -23,13 +24,22 @@ const getVariantClasses = (variant:VariantType = "default") => {
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
-    const { children, className, variant,...rest } = props;
-    const defaultClassName = `cursor-pointer px-8 py-2 transition text-white rounded-full`;
+    const { children,disabled, className, variant,size="md",...rest } = props;
+    const sizeClass = {
+      "sm":"h-5",
+      "md":"h-8",
+      "lg":"h-10",
+      "xl":"h-12"
+    }
+    const defaultClassName = `cursor-pointer px-8 transition text-white rounded-full ${sizeClass[size]}`;
     return (
       <button
         ref={ref}
         {...rest}
-        className={cn(defaultClassName,getVariantClasses(variant), className)}
+        disabled={disabled}
+        className={cn(defaultClassName,getVariantClasses(variant), className,{
+          "cursor-not-allowed":disabled
+        })}
       >
         {children}
       </button>

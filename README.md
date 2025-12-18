@@ -7,3 +7,9 @@ npx prisma generate
 
 ## cmd to run seed file - prisma\seed.ts to populate db with initial data
 npx prisma db seed
+
+## include all api routes in global api error handler like
+apiGlobalErrorHandler(async (request)=>{})
+
+## if route is rate limited then wrap it inside withRateLimit handler like
+apiGlobalErrorHandler(withRateLimit(async (request)=>{}))

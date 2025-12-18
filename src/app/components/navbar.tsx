@@ -1,15 +1,16 @@
 "use client";
 
-import { Menu, Search, ShoppingBag, X } from "lucide-react";
+import { MenuIcon, SearchIcon, ShoppingBagIcon, X } from "lucide-react";
 import { useState } from "react";
-import { cn } from "../lib/utils";
-import { useAuth } from "../features/auth/context/auth-context";
+import { cn } from "../../lib/utils";
+import { useAuth } from "../(routes)/auth/_auth-contexts/auth-context";
 import { Link } from "react-transition-progress/next";
 import { Button } from "./ui/button";
 import toast from "react-hot-toast";
 import { usePathname } from "next/navigation";
 import { ClassValue } from "clsx";
 import { NavLinkListItemType } from "@/types/types";
+import { useMobile } from "@/hooks/useMobile";
 
 type MobileNavProps = {
   open: boolean;
@@ -79,7 +80,7 @@ const MobileNav = ({
         className="lg:hidden p-1 cursor-pointer"
       >
         {/* Menu Icon SVG */}
-        {!open ? <Menu /> : <X />}
+        {!open ? <MenuIcon /> : <X />}
       </button>
       <div
         className={cn(
@@ -121,7 +122,7 @@ const DesktopMenuNav = ({ isAuthenticated, handleLogout }: DesktopMenuNav) => {
             type="text"
             placeholder="Search products"
           />
-          <Search />
+          <SearchIcon />
         </div>
       </div>
 
@@ -129,7 +130,7 @@ const DesktopMenuNav = ({ isAuthenticated, handleLogout }: DesktopMenuNav) => {
         {/* shopping bag */}
 
         <Button className="relative text-black p-0" variant="ghost">
-          <ShoppingBag />
+          <ShoppingBagIcon />
 
           <span className="absolute -top-2 -right-3 text-xs text-white bg-indigo-500 w-[18px] h-[18px] rounded-full">
             3
@@ -139,7 +140,7 @@ const DesktopMenuNav = ({ isAuthenticated, handleLogout }: DesktopMenuNav) => {
         {/* login/logout button */}
 
         {isAuthenticated ? (
-          <Button onClick={handleLogout}>Logout</Button>
+          <Button onClick={handleLogout} size="lg">Logout</Button>
         ) : (
           <Link
             href="/auth"
@@ -157,6 +158,7 @@ export const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
   const pathname = usePathname();
+  const isMobile = useMobile();
 
   const isAuthenticated = user ? true : false;
 
@@ -172,6 +174,13 @@ export const Navbar = () => {
 
   const toggleOpen = () => {
     setOpen((prev) => !prev);
+    if (isMobile) {
+      if (open) {
+        document.body.style.overflowY = "auto";
+      } else {
+        document.body.style.overflowY = "hidden";
+      }
+    }
   };
 
   const isPathExcluded = ["/auth"].includes(pathname);

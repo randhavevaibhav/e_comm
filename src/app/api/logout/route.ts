@@ -1,4 +1,4 @@
-import { apiGlobalErrorHandler } from "@/app/lib/api-global-error-handler";
+import { apiGlobalErrorHandler } from "@/lib/api-global-error-handler";
 import { cookies } from "next/headers";
 import {  NextResponse } from "next/server";
 

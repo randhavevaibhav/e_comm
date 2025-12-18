@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AuthContextProvider } from "@/app/features/auth/context/auth-context";
+import { AuthContextProvider } from "@/app/(routes)/auth/_auth-contexts/auth-context";
 import { ProgressBar, ProgressBarProvider } from "react-transition-progress";
 import { Toaster } from "react-hot-toast";
 import { Navbar } from "@/app/components/navbar";

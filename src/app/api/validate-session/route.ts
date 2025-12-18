@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { verifyJwtToken } from "@/app/lib/utils";
-import { apiGlobalErrorHandler } from "@/app/lib/api-global-error-handler";
+import { verifyJwtToken } from "@/lib/utils";
+import { apiGlobalErrorHandler } from "@/lib/api-global-error-handler";
 
 export const GET = apiGlobalErrorHandler(async () => {
   const cookieStore = await cookies();

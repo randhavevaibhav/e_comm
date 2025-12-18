@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 import { ClassValue } from "clsx";
 
 type ErrorMessageProps = {
@@ -6,7 +6,7 @@ type ErrorMessageProps = {
   className?: ClassValue;
 };
 
-export const ErrorMessage = ({ children, className }: ErrorMessageProps) => {
+export const ErrorMessage = ({ children, className ,...rest}: ErrorMessageProps) => {
   const defaultClasses = `text-red-600 text-sm text-left tracking-wide`;
-  return <div className={cn(defaultClasses, className)}>{children}</div>;
+  return <div className={cn(defaultClasses, className)} {...rest}>{children}</div>;
 };

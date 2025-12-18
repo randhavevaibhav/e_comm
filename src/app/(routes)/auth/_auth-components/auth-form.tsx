@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { LoginForm } from "./login-form";
 import { SignupForm } from "./signup-form";
-import { cn } from "@/app/lib/utils";
-
-
+import { cn } from "@/lib/utils";
+import { ErrorMessage } from "@/app/components/ui/error-message";
 
 export const AuthForm = () => {
   const [userAuthState, setUserAuthState] = useState<"login" | "signup">(
@@ -13,7 +12,6 @@ export const AuthForm = () => {
   );
 
   const setUserAuthStateToLogin = () => {
- 
     setUserAuthState("login");
   };
 
@@ -32,7 +30,6 @@ export const AuthForm = () => {
   );
 };
 
-
 export const InputContainer = ({
   children,
   loading = false,
@@ -43,7 +40,7 @@ export const InputContainer = ({
   return (
     <div
       className={cn(
-        "flex items-center  w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2 ",
+        "flex items-center  w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2 has-focus:ring-2 has-focus:ring-indigo-500 transition ",
         {
           "bg-gray-200": loading,
         }
@@ -51,5 +48,23 @@ export const InputContainer = ({
     >
       {children}
     </div>
+  );
+};
+
+export const FormError = ({ error }: { error: string|null }) => {
+  return (
+    <ErrorMessage
+      className={cn(
+        {
+          "opacity-100 visible": error,
+          "opacity-0 invisible": !error,
+        },
+        "text-center mb-2"
+      )}
+      data-test={`submit-form-error`}
+    >
+      <p>Error while submitting form !!</p>
+      <p>{error}</p>
+    </ErrorMessage>
   );
 };
