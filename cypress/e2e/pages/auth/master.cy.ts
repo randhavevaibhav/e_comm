@@ -1,1 +1,0 @@
-import "@Cypress/e2e/pages/auth/login-form/login-form-spec.cy"

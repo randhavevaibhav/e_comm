@@ -1,0 +1,67 @@
+name: Cypress E2E Tests (Next.js)
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Start Next.js app
+        run: npm start &
+        env:
+          NODE_ENV: test
+
+      - name: Check env vars
+        run: |
+          echo "DATABASE_URL exists? ${DATABASE_URL:+yes}"
+          echo "REDIS_HOST exists? ${REDIS_HOST:+yes}"
+          echo "REDIS_PORT exists? ${REDIS_PORT:+yes}"
+          echo "REDIS_PASSWORD exists? ${REDIS_PASSWORD:+yes}"
+          echo "REDIS_REST_TOKEN exists? ${REDIS_PASSWORD:+yes}"
+          echo "CLIENT URL exists? ${CYPRESS_CLIENT_URL:+yes}"
+          echo "User email exists? ${CYPRESS_USER_EMAIL:+yes}"
+          echo "User pass exists? ${CYPRESS_USER_PASSWORD:+yes}"
+          echo "CYPRESS_VIDEO_OPTION exists? ${CYPRESS_VIDEO_OPTION:+yes}"
+      - name: Run Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          wait-on: http://localhost:3000
+          wait-on-timeout: 120
+          browser: chrome
+          spec: cypress/e2e/master.cy.ts
+        env:
+          CYPRESS_BASE_URL: http://localhost:3000
+
+      - name: Upload Cypress Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: Upload Cypress Videos
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: cypress/videos

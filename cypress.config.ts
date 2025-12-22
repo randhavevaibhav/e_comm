@@ -24,12 +24,11 @@ export default defineConfig({
         webpackOptions: {
           resolve: {
             alias: {
-             //these import alias required when cypress actually runs
-             // and the alias in cypress/tsconfig.json are required by typescript in compile time
+              //these import alias required when cypress actually runs
+              // and the alias in cypress/tsconfig.json are required by typescript in compile time
               "@utils": path.resolve(__dirname, "cypress/e2e/utils"),
               "@Cypress": path.resolve(__dirname, "cypress/"),
-               "@": path.resolve(__dirname, "src/"),
-
+              "@": path.resolve(__dirname, "src/"),
             },
             extensions: [".js", ".jsx", ".ts", ".tsx"], // Add extensions for your files
           },
@@ -55,7 +54,6 @@ export default defineConfig({
       on("file:preprocessor", webpackPreprocessor(options));
     },
     env: {
-      apiURL: process.env.CYPRESS_API_URL,
       userEmail: process.env.CYPRESS_USER_EMAIL,
       password: process.env.CYPRESS_USER_PASSWORD,
     },
