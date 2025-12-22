@@ -20,7 +20,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@Cypress/*":["cypress/*"],
+      "@Cypress/*":["./cypress/*"],
     }
   },
   "include": [
