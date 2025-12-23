@@ -42,3 +42,9 @@ export class SignupFormActions extends Base {
     cy.getBySel(loginHeader).should("be.visible");
   }
 }
+
+export const signupInterceptor = () => {
+  const signupInterAlias = "signup-interceptor";
+  cy.intercept("POST", "/api/signup").as(signupInterAlias);
+  return "@" + signupInterAlias;
+};
