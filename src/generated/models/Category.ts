@@ -231,9 +231,9 @@ export type CategoryUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type CategoryNullableScalarRelationFilter = {
-  is?: Prisma.CategoryWhereInput | null
-  isNot?: Prisma.CategoryWhereInput | null
+export type CategoryScalarRelationFilter = {
+  is?: Prisma.CategoryWhereInput
+  isNot?: Prisma.CategoryWhereInput
 }
 
 export type CategoryCountOrderByAggregateInput = {
@@ -257,12 +257,10 @@ export type CategoryCreateNestedOneWithoutSubCategoryInput = {
   connect?: Prisma.CategoryWhereUniqueInput
 }
 
-export type CategoryUpdateOneWithoutSubCategoryNestedInput = {
+export type CategoryUpdateOneRequiredWithoutSubCategoryNestedInput = {
   create?: Prisma.XOR<Prisma.CategoryCreateWithoutSubCategoryInput, Prisma.CategoryUncheckedCreateWithoutSubCategoryInput>
   connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutSubCategoryInput
   upsert?: Prisma.CategoryUpsertWithoutSubCategoryInput
-  disconnect?: Prisma.CategoryWhereInput | boolean
-  delete?: Prisma.CategoryWhereInput | boolean
   connect?: Prisma.CategoryWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutSubCategoryInput, Prisma.CategoryUpdateWithoutSubCategoryInput>, Prisma.CategoryUncheckedUpdateWithoutSubCategoryInput>
 }

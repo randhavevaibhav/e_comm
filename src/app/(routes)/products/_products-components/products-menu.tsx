@@ -107,7 +107,7 @@ const ExpandableListItem = (props: ExpandableListItemProps) => {
   return (
     <li>
       <div
-        className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+        className="flex cursor-pointer items-center justify-between rounded-lg px-4 pb-1 pt-3"
         onClick={handleClick}
       >
         <div className="flex gap-2 items-center">
@@ -157,7 +157,7 @@ const RegularListItem = forwardRef<HTMLLIElement, RegularListItemProps>(
       <li ref={ref}>
         <Link
           href={listItem.href}
-          className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 w-full"
+          className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium w-full"
         >
           {listItem.icon ? listItem.icon : null}
           {listItem.name}
@@ -195,7 +195,7 @@ const ListItem = forwardRef<HTMLLIElement, ListItemProps>((props, ref) => {
 
 const List = ({ itemList }: { itemList: NavLinkListItemType[] }) => {
   return (
-    <ul className="mt-6 space-y-1 lg:max-h-max max-h-80 overflow-y-auto ">
+    <ul className="mt-6 space-y-1 lg:max-h-max max-h-80 overflow-y-auto dark:bg-input/30 border border-input rounded-md">
       {itemList.map((listItem, idx) => {
         const isLastElement = idx + 1 === itemList.length;
         return (

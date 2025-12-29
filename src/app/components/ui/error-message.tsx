@@ -7,6 +7,6 @@ type ErrorMessageProps = {
 };
 
 export const ErrorMessage = ({ children, className ,...rest}: ErrorMessageProps) => {
-  const defaultClasses = `text-red-600 text-sm text-left tracking-wide`;
+  const defaultClasses = `text-destructive text-sm text-left tracking-wide`;
   return <div className={cn(defaultClasses, className)} {...rest}>{children}</div>;
 };

@@ -9,7 +9,11 @@
 * 🟢 You can import this file directly.
 */
 
+export const TargetGroup = {
+  MEN: 'MEN',
+  WOMEN: 'WOMEN',
+  KIDS: 'KIDS',
+  UNISEX: 'UNISEX'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type TargetGroup = (typeof TargetGroup)[keyof typeof TargetGroup]

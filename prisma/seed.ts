@@ -15,7 +15,7 @@ async function main() {
   // Data structure for the categories and their nested subcategories
   const categoriesWithSubCategories: Prisma.CategoryCreateInput[] = [
     {
-      name: "Shirts",
+      name: "shirts",
       subCategory: {
         create: [
           { name: "men shirts" },
@@ -25,7 +25,7 @@ async function main() {
       },
     },
     {
-      name: "Pants",
+      name: "pants",
       subCategory: {
         create: [
           { name: "men pants" },
@@ -48,6 +48,7 @@ async function main() {
 
   // 2. Fetch all SubCategories IDs for Product linking
   const allSubCategories = await prisma.subCategory.findMany();
+
   const subCategoryMap = new Map(
     allSubCategories.map((sc) => [sc.name, sc.id])
   );
@@ -58,8 +59,9 @@ async function main() {
     // Shirts
     {
       name: "Classic White Oxford",
+      targetGroup: "MEN",
       price: 49.99,
-      subCategoryId: subCategoryMap.get("men shirts"),
+      subCategoryId: subCategoryMap.get("men shirts")!,
       stock: 150,
       description: "A timeless, crisp white cotton shirt for men.",
       imageUrl:
@@ -67,8 +69,9 @@ async function main() {
     },
     {
       name: "Floral Summer Blouse",
+      targetGroup: "WOMEN",
       price: 35.5,
-      subCategoryId: subCategoryMap.get("women shirts"),
+      subCategoryId: subCategoryMap.get("women shirts")!,
       stock: 85,
       description: "Lightweight and airy women's blouse.",
       imageUrl:
@@ -77,7 +80,8 @@ async function main() {
     {
       name: "Blue Pattern Kids Tee",
       price: 15.0,
-      subCategoryId: subCategoryMap.get("kids shirts"),
+      targetGroup: "KIDS",
+      subCategoryId: subCategoryMap.get("kids shirts")!,
       stock: 200,
       description: "Fun blue t-shirt with a playful graphic print.",
       imageUrl:
@@ -87,16 +91,18 @@ async function main() {
     {
       name: "Slim Fit Khaki Chinos",
       price: 59.99,
-      subCategoryId: subCategoryMap.get("men pants"),
+      targetGroup: "MEN",
+      subCategoryId: subCategoryMap.get("men pants")!,
       stock: 120,
       description: "Versatile, slim-fit cotton chinos.",
       imageUrl:
-        "url_https://images.unsplash.com/photo-1753381686374-47ebeb5771b4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fEtoYWtpJTIwcGFudHN8ZW58MHwwfDB8fHww4",
+        "https://images.unsplash.com/photo-1753381686374-47ebeb5771b4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fEtoYWtpJTIwcGFudHN8ZW58MHwwfDB8fHww4",
     },
     {
       name: "High-Waisted Blue Jeans",
       price: 65.0,
-      subCategoryId: subCategoryMap.get("women pants"),
+      targetGroup: "WOMEN",
+      subCategoryId: subCategoryMap.get("women pants")!,
       stock: 90,
       description: "Stretchy, high-waisted skinny jeans for women.",
       imageUrl:
@@ -105,7 +111,8 @@ async function main() {
     {
       name: "Grey Fleece Joggers",
       price: 22.99,
-      subCategoryId: subCategoryMap.get("kids pants"),
+      targetGroup: "KIDS",
+      subCategoryId: subCategoryMap.get("kids pants")!,
       stock: 110,
       description: "Comfortable grey fleece joggers for active kids.",
       imageUrl:

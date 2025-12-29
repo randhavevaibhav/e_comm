@@ -11,6 +11,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { className, ...rest } = props;
 
   return (
-    <input ref={ref} className={cn(defaultClasses, className)} {...rest} />
+    <input ref={ref} className={cn(defaultClasses, className,`text-primary`)} {...rest} />
   );
 });

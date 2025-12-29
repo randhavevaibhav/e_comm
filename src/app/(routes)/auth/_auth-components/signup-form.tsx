@@ -63,14 +63,13 @@ export const SignupForm = ({ setUserAuthStateToLogin }: SignupFormProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-1 sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white"
+      className="space-y-1 sm:w-[350px] w-full text-center border dark:bg-input/30 border-input shadow rounded-2xl px-8 "
     >
-      <header className="my-4" data-test={`signup-header`}>
-        <div className="w-full">
-          <Logo className="mx-auto mb-6" />
-        </div>
-        <h1 className="text-gray-900 text-3xl font-medium">Sign up</h1>
-        <p className="text-gray-500 text-sm ">Sign up in to continue</p>
+      <header className="mt-2 mb-4" data-test={`signup-header`}>
+        <Logo className={`w-fit mx-auto`} />
+
+        <h1 className=" text-3xl font-medium">Sign up</h1>
+        <p className="text-muted-foreground my-1">Please Sign up to continue</p>
       </header>
 
       <InputContainer loading={loading}>
@@ -97,7 +96,7 @@ export const SignupForm = ({ setUserAuthStateToLogin }: SignupFormProps) => {
           },
           "ml-2"
         )}
-         data-test={`user-name-input-error`}
+        data-test={`user-name-input-error`}
       >
         {userNameFieldErrors ? userNameFieldErrors : `Error`}
       </ErrorMessage>
@@ -113,7 +112,7 @@ export const SignupForm = ({ setUserAuthStateToLogin }: SignupFormProps) => {
           className={cn({
             "cursor-not-allowed": loading,
           })}
-              data-test={`email-input`}
+          data-test={`email-input`}
         />
       </InputContainer>
       <ErrorMessage
@@ -124,7 +123,7 @@ export const SignupForm = ({ setUserAuthStateToLogin }: SignupFormProps) => {
           },
           "ml-2"
         )}
-          data-test={`email-input-error`}
+        data-test={`email-input-error`}
       >
         {emailFieldErrors ? emailFieldErrors : `Error`}
       </ErrorMessage>
@@ -140,7 +139,7 @@ export const SignupForm = ({ setUserAuthStateToLogin }: SignupFormProps) => {
           className={cn({
             "cursor-not-allowed": loading,
           })}
-           data-test={`password-input`}
+          data-test={`password-input`}
         />
       </InputContainer>
       <ErrorMessage
@@ -159,10 +158,15 @@ export const SignupForm = ({ setUserAuthStateToLogin }: SignupFormProps) => {
       {/* <div className="mt-4 text-left text-indigo-500">
                     <button className="text-sm" type="reset">Forget password?</button>
                 </div> */}
-      <Button type="submit" className="mt-2 w-full" size="lg" data-test={`signup-btn`}>
+      <Button
+        type="submit"
+        className="mt-2 w-full"
+        size="lg"
+        data-test={`signup-btn`}
+      >
         {!loading ? `Sign up` : `loading...`}
       </Button>
-      <p className="text-gray-500 text-sm mt-3 mb-1">
+      <p className="text-muted-foreground text-sm mt-3 mb-1">
         Already have an account?
         <button
           type="button"

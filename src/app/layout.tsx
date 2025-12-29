@@ -4,7 +4,7 @@ import "./globals.css";
 import { AuthContextProvider } from "@/app/(routes)/auth/_auth-contexts/auth-context";
 import { ProgressBar, ProgressBarProvider } from "react-transition-progress";
 import { Toaster } from "react-hot-toast";
-import { Navbar } from "@/app/components/navbar";
+import { Navbar } from "@/app/components/navbar/navbar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

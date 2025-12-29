@@ -1322,6 +1322,7 @@ export const ProductScalarFieldEnum = {
   description: 'description',
   price: 'price',
   imageUrl: 'imageUrl',
+  targetGroup: 'targetGroup',
   subCategoryId: 'subCategoryId',
   stock: 'stock',
   createdAt: 'createdAt',
@@ -1463,6 +1464,34 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TargetGroup'
+ */
+export type EnumTargetGroupFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TargetGroup'>
+    
+
+
+/**
+ * Reference to a field of type 'TargetGroup[]'
+ */
+export type ListEnumTargetGroupFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TargetGroup[]'>
     
 
 
