@@ -1,25 +1,18 @@
 import { ClassValue } from "clsx";
-import Image from "next/image";
 import { Link } from "react-transition-progress/next";
-import { cn } from "../../lib/utils";
+import { FeatherIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-type LogoProps ={
-    className?:ClassValue
-}
+type LogoProps = {
+  className?: ClassValue;
+  size?: number;
+};
 
-export const Logo = ({className}:LogoProps) => {
-    const defaultClasses = `bg-black`
+export const Logo = ({ className, size = 40 }: LogoProps) => {
+  const defaultClasses = `inline-block p-3`;
   return (
-    <Link href={"/"}>
-      <Image
-        src={`/vercel.svg`}
-        alt="logo"
-        width={50}
-        height={50}
-        className={
-            cn(defaultClasses,className)
-        }
-      />
+    <Link href={"/"} className={cn(defaultClasses, className)}>
+      <FeatherIcon size={size} />
     </Link>
   );
 };

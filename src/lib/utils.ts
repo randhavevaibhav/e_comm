@@ -27,6 +27,14 @@ export const sleep = (delay = 3000) => {
   });
 };
 
+export const capitalize =(str:string)=>{
+return str[0]?.toUpperCase()+str.slice(1)
+}
+
+export function serializePrisma<T>(data: T): T {
+  return JSON.parse(JSON.stringify(data));
+}
+
 export const protectedRoutes = [""];
 
 export const authRoutes = ["/auth"];
