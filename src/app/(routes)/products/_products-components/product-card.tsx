@@ -1,76 +1,89 @@
 "use client";
 
-
+import { Button } from "@/app/components/ui/button";
+import { slugify } from "@/lib/utils";
 import { productWithCategorySubCategory } from "@/services/product.service";
 import { ShoppingBagIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { Link } from "react-transition-progress/next";
 
+type ProductCardProps = {
+  product: productWithCategorySubCategory;
+};
 
-
-type ProductCardProps={
-  product:productWithCategorySubCategory;
-}
-
-export const ProductCard = ({product}:ProductCardProps) => {
+export const ProductCard = ({ product }: ProductCardProps) => {
   const [count, setCount] = useState(0);
-
-
+  const productPath = `/products/${slugify(product.targetGroup)}/${slugify(
+    product.subCategory.name
+  )}/${slugify(product.slug)}`;
   return (
-    <div className="border border-gray-500/20 rounded-md md:px-4 px-3 py-2 bg-white  max-w-74 w-full">
-      <div className="group cursor-pointer flex items-center justify-center px-2">
+    <Link
+      href={productPath}
+      className="border group border-border bg-input/30 rounded-md md:px-4 px-3 py-2 max-w-74 w-full "
+    >
+      <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-gray-200">
         <Image
-          className="group-hover:scale-105 transition"
-          src={product.imageUrl?product.imageUrl:"NA"}
-          width={300}
-          height={300}
-          alt={product.description?product.description:"NA"}
+          src={product.imageUrl ? product.imageUrl : "img url"}
+          alt={product.name}
+          fill
+          className="object-cover group-hover:opacity-75 transition-opacity"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
         />
       </div>
-      <div className="text-gray-500/60 text-sm">
+      <div className="text-sm">
         <div className="mt-4">
-            <span>{}</span>
-        <span>&nbsp;{">"}&nbsp;</span>
-        <span>{product.subCategory.name}</span>
+          <span>{product.subCategory.name}</span>
         </div>
-        <p className="text-gray-700 font-medium text-lg truncate w-full">
-          {product.name}
-        </p>
+        <p className="font-medium text-lg truncate w-full">{product.name}</p>
 
         <div className="flex items-end justify-between mt-3">
           <p className="md:text-xl text-base font-medium text-indigo-500">
-            
-         ${product.price.toString()}
+            ${product.price.toString()}
           </p>
           <div className="text-indigo-500">
             {count === 0 ? (
-              <button
-                className="flex items-center justify-center gap-1 bg-indigo-100 border border-indigo-300 md:w-20 w-16 h-[34px] rounded text-indigo-600 font-medium"
-                onClick={() => setCount(1)}
+              <Button
+                className="flex items-center justify-center gap-1  md:w-20 w-16 h-[34px] rounded font-medium"
+                onClick={(e) => {
+                  e.stopPropagation();
+                   e.preventDefault();
+                  setCount(1);
+                }}
               >
-             <ShoppingBagIcon/>
+                <ShoppingBagIcon />
                 Add
-              </button>
+              </Button>
             ) : (
-              <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] bg-indigo-500/25 rounded select-none">
-                <button
-                  onClick={() => setCount((prev) => Math.max(prev - 1, 0))}
-                  className="cursor-pointer text-md px-2 h-full"
+              <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] rounded select-none border-border border">
+                <Button
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setCount((prev) => Math.max(prev - 1, 0));
+                  }}
+                  className="cursor-pointer text-lg px-2 h-full"
                 >
                   -
-                </button>
+                </Button>
                 <span className="w-5 text-center">{count}</span>
-                <button
-                  onClick={() => setCount((prev) => prev + 1)}
-                  className="cursor-pointer text-md px-2 h-full"
+                <Button
+                  variant="ghost"
+                  onClick={(e) => {
+                     e.preventDefault();
+                    e.stopPropagation();
+                    setCount((prev) => prev + 1);
+                  }}
+                  className="cursor-pointer text-lg px-2 h-full"
                 >
                   +
-                </button>
+                </Button>
               </div>
             )}
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

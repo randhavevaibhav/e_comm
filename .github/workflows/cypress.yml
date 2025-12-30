@@ -30,6 +30,17 @@ jobs:
         run: npm start &
         env:
           NODE_ENV: test
+      - name: Check env vars
+        run: |
+          echo "CYPRESS_CLIENT_URL exists? ${CYPRESS_CLIENT_URL:+yes}"
+          echo "CYPRESS_USER_EMAIL exists? ${CYPRESS_USER_EMAIL:+yes}"
+          echo "CYPRESS_USER_PASSWORD exists? ${CYPRESS_USER_PASSWORD:+yes}"
+          echo "CYPRESS_VIDEO_OPTION exists? ${CYPRESS_VIDEO_OPTION:+yes}"
+          echo "DATABASE_URL exists? ${DATABASE_URL:+yes}"
+          echo "REDIS_HOST exists? ${REDIS_HOST:+yes}"
+          echo "REDIS_PASSWORD exists? ${REDIS_PASSWORD:+yes}"
+          echo "REDIS_PORT exists? ${REDIS_PORT:+yes}"
+          echo "REDIS_REST_TOKEN exists? ${REDIS_REST_TOKEN:+yes}"
 
       - name: Check env vars
         run: |
@@ -65,3 +76,13 @@ jobs:
         with:
           name: cypress-videos
           path: cypress/videos
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      REDIS_HOST: ${{ secrets.REDIS_HOST }}
+      REDIS_PORT: ${{ secrets.REDIS_PORT }}
+      REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+      REDIS_REST_TOKEN: ${{ secrets.REDIS_REST_TOKEN }}
+      CYPRESS_CLIENT_URL: ${{ secrets.CYPRESS_CLIENT_URL }}
+      CYPRESS_USER_EMAIL: ${{ secrets.CYPRESS_USER_EMAIL }}
+      CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+      CYPRESS_VIDEO_OPTION: ${{ secrets.CYPRESS_VIDEO_OPTION }}
