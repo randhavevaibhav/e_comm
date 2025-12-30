@@ -4,13 +4,14 @@ import { cn } from "@/lib/utils";
 import { ClassValue } from "clsx";
 import { MoonIcon, SunMediumIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Button } from "./ui/button";
 
 type ToggleThemeProps = {
     className?:ClassValue;
 }
 
 export const ToggleTheme = ({className}:ToggleThemeProps) => {
-    const defaultClasses = `cursor-pointer text-muted-foreground`;
+    const defaultClasses = `cursor-pointer text-muted-foreground p-2`;
   const [theme, setTheme] = useState<"light" | "dark">();
 
   const changeThemeToDark = () => {
@@ -29,8 +30,15 @@ export const ToggleTheme = ({className}:ToggleThemeProps) => {
   }, []);
 
   return theme === "dark" ? (
-    <SunMediumIcon onClick={changeThemeToLight} className={cn(defaultClasses,className)} />
+   
+      <Button variant="ghost" onClick={changeThemeToLight} className={cn(defaultClasses,className)}>
+        <SunMediumIcon  />
+      </Button>
+   
   ) : (
-    <MoonIcon onClick={changeThemeToDark}  className={cn(defaultClasses,className)} />
+      <Button variant="ghost" onClick={changeThemeToDark} className={cn(defaultClasses,className)}>
+        <MoonIcon  />
+      </Button>
+    
   );
 };

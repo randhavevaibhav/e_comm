@@ -63,11 +63,11 @@ const productList: NavLinkListItemType[] = [
           },
           {
             name: "Kid shirts",
-            href: "/products/kids/kid-shirts",
+            href: "/products/kids/kids-shirts",
           },
           {
             name: "Kid pants",
-            href: "/products/kids/kid-pants",
+            href: "/products/kids/kids-pants",
           },
         ],
       },

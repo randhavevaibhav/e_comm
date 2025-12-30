@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { Prisma } from "@/generated/client";
+import { randomUUID } from "crypto";
 
 async function main() {
   console.log("Start seeding process with two categories...");
@@ -60,6 +61,7 @@ async function main() {
     {
       name: "Classic White Oxford",
       targetGroup: "MEN",
+      slug: `${randomUUID()}_classic-white-oxford`,
       price: 49.99,
       subCategoryId: subCategoryMap.get("men shirts")!,
       stock: 150,
@@ -70,6 +72,7 @@ async function main() {
     {
       name: "Floral Summer Blouse",
       targetGroup: "WOMEN",
+      slug: `${randomUUID()}_floral-summer-blouse`,
       price: 35.5,
       subCategoryId: subCategoryMap.get("women shirts")!,
       stock: 85,
@@ -80,6 +83,7 @@ async function main() {
     {
       name: "Blue Pattern Kids Tee",
       price: 15.0,
+      slug: `${randomUUID()}_blue-pattern-kids-tee`,
       targetGroup: "KIDS",
       subCategoryId: subCategoryMap.get("kids shirts")!,
       stock: 200,
@@ -91,6 +95,7 @@ async function main() {
     {
       name: "Slim Fit Khaki Chinos",
       price: 59.99,
+      slug: `${randomUUID()}_slim-fit-khaki-chinos`,
       targetGroup: "MEN",
       subCategoryId: subCategoryMap.get("men pants")!,
       stock: 120,
@@ -101,6 +106,7 @@ async function main() {
     {
       name: "High-Waisted Blue Jeans",
       price: 65.0,
+      slug: `${randomUUID()}_high-Waisted-blue-jeans`,
       targetGroup: "WOMEN",
       subCategoryId: subCategoryMap.get("women pants")!,
       stock: 90,
@@ -110,6 +116,7 @@ async function main() {
     },
     {
       name: "Grey Fleece Joggers",
+      slug: `${randomUUID()}_grey-fleece-joggers`,
       price: 22.99,
       targetGroup: "KIDS",
       subCategoryId: subCategoryMap.get("kids pants")!,

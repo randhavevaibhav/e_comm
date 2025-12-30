@@ -1,5 +1,3 @@
-delete files -
-drop-down-menu - /products/components
-product-card - /products/components
-products-menu -  /products/components
-navbar - app/components
+delete folders -
+src/app/(routes)/products/[category]
+

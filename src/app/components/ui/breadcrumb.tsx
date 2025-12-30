@@ -18,7 +18,6 @@ const BreadcrumbListItem = ({
   item: BreadcrumbListItem;
   isLastItem: boolean;
 }) => {
-
   return (
     <li className="flex items-center ">
       <Link
@@ -41,11 +40,22 @@ type BreadcrumbProps = {
 export const Breadcrumb = ({ className }: BreadcrumbProps) => {
   const defaultClasses = `flex`;
   const pathname = usePathname();
-  const navList = pathname.split("/").filter((val) => val != "");
+  const navList = pathname
+    .split("/")
+    .filter((val) => val != "");
+
   const breadCrumbList = navList.reduce(
     (acc, val, idx) => {
+      let nodeName = val;
+
+      if (nodeName.includes("_")) {
+        nodeName = nodeName.split("_")[1].replaceAll("-", " ");
+      } else if (val.includes("-")) {
+        nodeName = nodeName.replaceAll("-", " ");
+      }
+
       const newNode = {
-        name: val,
+        name: nodeName,
         href: `/${navList.slice(0, idx + 1).join("/")}`,
       };
       acc = [...acc, newNode];
