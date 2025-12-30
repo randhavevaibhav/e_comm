@@ -30,6 +30,17 @@ jobs:
         run: npm start &
         env:
           NODE_ENV: test
+      - name: Check env vars
+        run: |
+          echo "CYPRESS_CLIENT_URL exists? ${CYPRESS_CLIENT_URL:+yes}"
+          echo "CYPRESS_USER_EMAIL exists? ${CYPRESS_USER_EMAIL:+yes}"
+          echo "CYPRESS_USER_PASSWORD exists? ${CYPRESS_USER_PASSWORD:+yes}"
+          echo "CYPRESS_VIDEO_OPTION exists? ${CYPRESS_VIDEO_OPTION:+yes}"
+          echo "DATABASE_URL exists? ${DATABASE_URL:+yes}"
+          echo "REDIS_HOST exists? ${REDIS_HOST:+yes}"
+          echo "REDIS_PASSWORD exists? ${REDIS_PASSWORD:+yes}"
+          echo "REDIS_PORT exists? ${REDIS_PORT:+yes}"
+          echo "REDIS_REST_TOKEN exists? ${REDIS_REST_TOKEN:+yes}"
 
       - name: Check env vars
         run: |
