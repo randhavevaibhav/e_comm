@@ -14,7 +14,7 @@ const AuthPageLayout = ({ children }: AuthPageLayoutProps) => {
           <HomeIcon className="text-muted-foreground" />
         </Link>
 
-        <ToggleTheme className={``} />
+        <ToggleTheme/>
       </div>
       {children}
     </div>

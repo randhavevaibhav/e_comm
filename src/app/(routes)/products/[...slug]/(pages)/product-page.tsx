@@ -16,7 +16,7 @@ const ProductPage = async ({ slug }: ProductPageProps) => {
   }
 
   return (
-    <div className="grid lg:grid-cols-[500px_auto] grid-cols-1">
+    <div className="flex flex-col-reverse lg:flex-row gap-6">
      
       <ProductCard product={serializePrisma(product)} />
       <h2 className="text-2xl font-medium"> Product page</h2>

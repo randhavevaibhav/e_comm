@@ -2,14 +2,14 @@
 
 import { Button } from "@/app/components/ui/button";
 import { slugify } from "@/lib/utils";
-import { productWithCategorySubCategory } from "@/services/product.service";
+import { ProductWithCategorySubCategory } from "@/services/product.service";
 import { ShoppingBagIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { Link } from "react-transition-progress/next";
 
 type ProductCardProps = {
-  product: productWithCategorySubCategory;
+  product: ProductWithCategorySubCategory;
 };
 
 export const ProductCard = ({ product }: ProductCardProps) => {
