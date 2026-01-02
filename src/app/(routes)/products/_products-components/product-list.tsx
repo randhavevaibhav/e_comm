@@ -1,10 +1,10 @@
 import { capitalize, serializePrisma } from "@/lib/utils";
 import { ProductCard } from "./product-card";
-import { productWithCategorySubCategory } from "@/services/product.service";
+import { ProductWithCategorySubCategory } from "@/services/product.service";
 
 type ProductListProps = {
   category: string;
-  products: productWithCategorySubCategory[];
+  products: ProductWithCategorySubCategory[];
 };
 
 export const ProductList = ({ category, products }: ProductListProps) => {

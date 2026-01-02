@@ -22,7 +22,7 @@ const BreadcrumbListItem = ({
     <li className="flex items-center ">
       <Link
         href={item.href}
-        className="p-1 rounded-md font-medium tracking-wide hover:text-indigo-500 text-muted-foreground"
+        className="p-1 rounded-md font-medium tracking-wide hover:text-indigo-500 text-muted-foreground lg:text-base text-sm "
       >
         {capitalize(item.name)}
       </Link>

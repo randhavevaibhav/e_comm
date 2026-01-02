@@ -1,3 +1,0 @@
-delete folders -
-src/app/(routes)/products/[category]
-

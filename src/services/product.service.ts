@@ -81,6 +81,6 @@ export const getAllProducts = async()=>{
   })
 }
 
-export type productWithCategorySubCategory = Awaited<
+export type ProductWithCategorySubCategory = Awaited<
   ReturnType<typeof getProductsByCategory>
 >[0];
