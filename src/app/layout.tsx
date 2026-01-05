@@ -32,12 +32,14 @@ export default function RootLayout({
       >
         <ProgressBarProvider>
           {/* Keep the z-index of  ProgressBar high enough to show it above all elements*/}
-        
-           <ProgressBar className="fixed h-1 shadow-lg shadow-sky-500/20 bg-blue-600 top-0 z-(--progress-bar-z-index) test-progress-bar" />
-       
+
+          <ProgressBar className="fixed h-1 shadow-lg shadow-sky-500/20 bg-blue-600 top-0 z-(--progress-bar-z-index) test-progress-bar" />
+
           <AuthContextProvider>
             <Navbar />
-            <main className="max-w-7xl m-auto">{children}</main>
+            <main className="max-w-7xl m-auto mt-(--desktop-header-height)">
+              {children}
+            </main>
           </AuthContextProvider>
         </ProgressBarProvider>
         <Toaster />

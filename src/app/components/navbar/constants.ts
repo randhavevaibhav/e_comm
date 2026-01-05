@@ -1,6 +1,18 @@
 import { MegaMenuCategoryType } from "../ui/mega-menu";
 
+  export const PUBLIC_ROUTES = [
+    {
+      name: "Contact",
+      href: "/contact",
+    },
+  ];
 
+  export const PROTECTED_ROUTES = [
+    {
+      name: "My orders",
+      href: "/my-orders",
+    },
+  ];
 
 
 export const productsCategories:MegaMenuCategoryType[] = [

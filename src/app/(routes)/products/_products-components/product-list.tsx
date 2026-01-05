@@ -1,6 +1,7 @@
 import { capitalize, serializePrisma } from "@/lib/utils";
 import { ProductCard } from "./product-card";
 import { ProductWithCategorySubCategory } from "@/services/product.service";
+import { ClientOnly } from "@/app/components/client-only";
 
 type ProductListProps = {
   category: string;
@@ -14,10 +15,12 @@ export const ProductList = ({ category, products }: ProductListProps) => {
       <div className="border grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-x-2 gap-y-4 p-2">
         {products.map((product, idx) => {
           return (
-            <ProductCard
-              key={`${idx}_${product.id}`}
-              product={serializePrisma(product)}
-            />
+            <ClientOnly  key={`${idx}_${product.id}`}>
+              <ProductCard
+               
+                product={serializePrisma(product)}
+              />
+            </ClientOnly>
           );
         })}
       </div>

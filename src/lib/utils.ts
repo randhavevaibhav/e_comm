@@ -35,7 +35,7 @@ export function serializePrisma<T>(data: T): T {
   return JSON.parse(JSON.stringify(data));
 }
 
-export const protectedRoutes = [""];
+export const protectedRoutes = ["/my-orders"];
 
 export const authRoutes = ["/auth"];
 

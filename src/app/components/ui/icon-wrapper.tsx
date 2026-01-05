@@ -14,6 +14,7 @@ export const IconWrapper = ({
   className?: ClassValue;
 }) => {
   const isMobile = useMobile();
+
   const defaultClasses = "text-foreground";
   const defaultSize = isMobile ? 20 : 25;
 

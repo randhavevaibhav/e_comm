@@ -3,9 +3,10 @@
 import { Button } from "@/app/components/ui/button";
 import { slugify } from "@/lib/utils";
 import { ProductWithCategorySubCategory } from "@/services/product.service";
+import { useCartStoreSelectors } from "@/store/use-cart-store";
 import { ShoppingBagIcon } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-transition-progress/next";
 
 type ProductCardProps = {
@@ -14,9 +15,21 @@ type ProductCardProps = {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const [count, setCount] = useState(0);
+
   const productPath = `/products/${slugify(product.targetGroup)}/${slugify(
     product.subCategory.name
   )}/${slugify(product.slug)}`;
+
+  const { addToCart, removeFromCart, getProductFromCart } =
+    useCartStoreSelectors();
+  const productFromCart = getProductFromCart(product.id);
+
+  useEffect(() => {
+    if (productFromCart) {
+      setCount(productFromCart.quantity);
+    }
+  }, []);
+
   return (
     <Link
       href={productPath}
@@ -47,8 +60,9 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                 className="flex items-center justify-center gap-1  md:w-20 w-16 h-[34px] rounded font-medium"
                 onClick={(e) => {
                   e.stopPropagation();
-                   e.preventDefault();
+                  e.preventDefault();
                   setCount(1);
+                  addToCart(product);
                 }}
               >
                 <ShoppingBagIcon />
@@ -56,24 +70,28 @@ export const ProductCard = ({ product }: ProductCardProps) => {
               </Button>
             ) : (
               <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] rounded select-none border-border border">
+                {/* remove from cart button */}
                 <Button
                   variant="ghost"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     setCount((prev) => Math.max(prev - 1, 0));
+                    removeFromCart(product.id);
                   }}
                   className="cursor-pointer text-lg px-2 h-full"
                 >
                   -
                 </Button>
                 <span className="w-5 text-center">{count}</span>
+                {/* add to cart button */}
                 <Button
                   variant="ghost"
                   onClick={(e) => {
-                     e.preventDefault();
+                    e.preventDefault();
                     e.stopPropagation();
                     setCount((prev) => prev + 1);
+                    addToCart(product);
                   }}
                   className="cursor-pointer text-lg px-2 h-full"
                 >
