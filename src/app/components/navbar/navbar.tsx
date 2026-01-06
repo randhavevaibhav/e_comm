@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { Logo } from "@/app/components/logo";
 import { ToggleTheme } from "@/app/components/theme-toggle";
 import { Button } from "@/app/components/ui/button";
-import { MenuIcon, XIcon } from "lucide-react";
+import { HomeIcon, MenuIcon, XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -16,6 +16,7 @@ import { ProtectedRoutes } from "./protected-routes";
 import { ProductSearch } from "./product-search";
 import { ShoppingCart } from "./shopping-cart";
 import { ClientOnly } from "../client-only";
+import { Link } from "react-transition-progress/next";
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -27,13 +28,21 @@ export const Navbar = () => {
   const isPathExcluded = ["/auth"].includes(pathname);
 
   if (isPathExcluded) {
-    return null;
+    return (
+      <nav className="h-(--desktop-header-height) flex items-center  w-full justify-between px-4 py-2 border-b border-border">
+        <Link href="/">
+          <HomeIcon className="text-muted-foreground" />
+        </Link>
+
+        <ToggleTheme />
+      </nav>
+    );
   }
 
   return (
     <>
       <nav>
-        <header className="flex bg-card border-b border sm:px-6 lg:px-4 px-2 min-h-16 tracking-wide fixed top-0 w-full z-(--nav-header-z-index)">
+        <header className="h-(--desktop-header-height) flex bg-card border-b border sm:px-6 lg:px-4 px-2 min-h-16 tracking-wide fixed top-0 w-full z-(--nav-header-z-index)">
           <div className="flex max-w-7xl mx-auto w-full">
             <div className="flex  items-center lg:gap-y-2 gap-4 w-full">
               {/* Mobile Toggle Button */}
