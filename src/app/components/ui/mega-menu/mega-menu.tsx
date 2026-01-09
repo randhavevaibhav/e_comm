@@ -16,42 +16,34 @@ import { createContext } from "react";
 import { Button } from "@/app/components/ui/button";
 import { useProgress } from "react-transition-progress";
 import { useMobile } from "@/hooks/useMobile";
+import { MegaMenuCategoryType } from "./types";
 
-export type MegaMenuCategoryType = {
-  title: string;
-  href: string;
-  dataTest?: string;
-  items?: {
-    name: string;
-    href: string;
-    dataTest?: string;
-  }[];
-};
+
 
 type MegaMenuToggleProps = ComponentPropsWithRef<"button"> & {
   children: React.ReactNode;
   callback?: () => void;
-  itemTitleDataTest?:string;
+  itemTitleDataTest?: string;
 };
 
 const MegaMenuToggle = forwardRef<HTMLButtonElement, MegaMenuToggleProps>(
   (props, ref) => {
-    const { children, callback ,itemTitleDataTest} = props;
-    const { toggleMegaMenu, isMegaMenuOpen ,openMegaMenu} = useMegaMenuContext();
+    const { children, callback, itemTitleDataTest } = props;
+    const { toggleMegaMenu, isMegaMenuOpen, openMegaMenu } =
+      useMegaMenuContext();
     const isMobile = useMobile();
     return (
       <Button
         className=" text-[15px] flex items-center outline-none lg:px-2 px-0 lg:hover:border-b lg:hover:border-indigo-500 lg:hover:text-indigo-500  transition-all font-medium rounded-none"
         onClick={(e) => {
-          if(isMobile)
-          {
+          if (isMobile) {
             toggleMegaMenu();
           }
           callback && callback();
         }}
-        onMouseEnter={()=>{
-          if(!isMobile){
-            openMegaMenu()
+        onMouseEnter={() => {
+          if (!isMobile) {
+            openMegaMenu();
           }
         }}
         aria-expanded={isMegaMenuOpen}
@@ -143,7 +135,6 @@ type CategoryBlockProps = MegaMenuCategoryType & {
 };
 
 const CategoryBlock = ({
-  dataTest = "",
   title,
   href,
   items,
@@ -161,30 +152,38 @@ const CategoryBlock = ({
     });
   };
 
+  const hrefArr = href.split("/");
+  const megaMenuItemSelector = hrefArr[hrefArr.length - 1] + "-page-link";
+
   return (
     <div className="">
       <Link
         className="lg:hover:text-indigo-500 lg:hover:border-indigo-500 text-base font-semibold mb-4 lg:hover:border-b lg:border-foreground pb-1 transition-all"
         href={href}
         onClick={handleLinkClick}
-        data-test={dataTest}
+        data-test={megaMenuItemSelector}
       >
         {title}
       </Link>
       <ul className="space-y-3 mt-2">
         {items &&
-          items.map((item, idx) => (
-            <li key={`${item.href}_${item.name}_${idx}`}>
-              <Link
-                href={item.href}
-                className="text-sm  text-muted-foreground text-wrap"
-                onClick={handleLinkClick}
-                data-test={item.dataTest ? item.dataTest : ""}
-              >
-                {item.name}
-              </Link>
-            </li>
-          ))}
+          items.map((item, idx) => {
+            const hrefArr = item.href.split("/");
+            const megaMenuItemSelector =
+              hrefArr[hrefArr.length - 1] + "-page-link";
+            return (
+              <li key={`${item.href}_${item.title}_${idx}`}>
+                <Link
+                  href={item.href}
+                  className="text-sm  text-muted-foreground text-wrap"
+                  onClick={handleLinkClick}
+                  data-test={megaMenuItemSelector}
+                >
+                  {item.title}
+                </Link>
+              </li>
+            );
+          })}
       </ul>
       <hr className="mt-2 lg:hidden block" />
     </div>
@@ -192,11 +191,20 @@ const CategoryBlock = ({
 };
 
 const MegaMenuCategoryContainer = ({
+  megaMenuContainerDataTest,
   children,
 }: {
+  megaMenuContainerDataTest?: string;
   children: React.ReactNode;
 }) => {
-  return <div className="grid lg:grid-cols-4 gap-6 w-full">{children}</div>;
+  return (
+    <div
+      className="grid lg:grid-cols-4 gap-6 w-full"
+      data-test={megaMenuContainerDataTest}
+    >
+      {children}
+    </div>
+  );
 };
 
 type MegaMenuContextType = {
@@ -247,22 +255,29 @@ type MegaMenuItemProps = {
   itemTitle: string;
   onClickCategoriesCb?: () => void;
   categories: MegaMenuCategoryType[];
-  itemTitleDataTest?:string;
+  itemTitleDataTest?: string;
+  megaMenuContainerDataTest?: string;
+  dataTest?: string;
 };
 
 export const MegaMenuItem = ({
   itemTitle,
   categories,
   onClickCategoriesCb,
-  itemTitleDataTest="",
+  itemTitleDataTest = "",
+  megaMenuContainerDataTest = "",
 }: MegaMenuItemProps) => {
   const itemTitleRef = useRef<HTMLButtonElement>(null);
 
   return (
     <MegaMenu>
-      <MegaMenu.Toggle ref={itemTitleRef} itemTitleDataTest={itemTitleDataTest}>{itemTitle}</MegaMenu.Toggle>
+      <MegaMenu.Toggle ref={itemTitleRef} itemTitleDataTest={itemTitleDataTest}>
+        {itemTitle}
+      </MegaMenu.Toggle>
       <MegaMenu.Container ref={itemTitleRef}>
-        <MegaMenu.CategoryContainer>
+        <MegaMenu.CategoryContainer
+          megaMenuContainerDataTest={megaMenuContainerDataTest}
+        >
           {categories.map((category, idx) => {
             return (
               <MegaMenu.CategoryBlock
@@ -270,7 +285,6 @@ export const MegaMenuItem = ({
                 href={category.href}
                 items={category.items}
                 callback={onClickCategoriesCb ? onClickCategoriesCb : () => {}}
-                dataTest={category.dataTest}
                 key={`${category.title}_${category.href}_${idx}`}
               />
             );

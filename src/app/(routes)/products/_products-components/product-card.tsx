@@ -14,13 +14,12 @@ type ProductCardProps = {
 };
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-  const { incProductCount,decProductCount, getProductFromCart } =
+  const { incProductCount, decProductCount, getProductFromCart } =
     useCartStoreSelectors();
 
   const productPath = `/products/${slugify(product.targetGroup)}/${slugify(
@@ -34,6 +33,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     <Link
       href={productPath}
       className="border group border-border bg-input/30 rounded-md md:px-4 px-3 py-2 max-w-74 w-full "
+      data-test="product-card"
     >
       <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-gray-200">
         <Image
@@ -66,6 +66,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
                   incProductCount(product);
                 }}
+                 data-test={"add-item-btn"}
               >
                 <ShoppingBagIcon />
                 Add
@@ -82,10 +83,17 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                     decProductCount(product.id);
                   }}
                   className="cursor-pointer text-lg px-2 h-full"
+                  data-test={"dec-item-count-btn"}
                 >
                   -
                 </Button>
-                <span className="w-5 text-center">{quantity}</span>
+                <span
+                  className="w-5 text-center"
+                  data-test={"item-quantity"}
+                  data-value={quantity}
+                >
+                  {quantity}
+                </span>
                 {/* add to cart button */}
                 <Button
                   variant="ghost"
@@ -96,6 +104,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                     incProductCount(product);
                   }}
                   className="cursor-pointer text-lg px-2 h-full"
+                  data-test={"inc-item-count-btn"}
                 >
                   +
                 </Button>

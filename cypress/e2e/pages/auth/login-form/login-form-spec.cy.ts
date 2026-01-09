@@ -1,4 +1,4 @@
-import { LoginFormActions, loginInterceptor } from "./actions/login-form-actions";
+import { LoginFormActions, loginInterceptor } from "./login-form-actions";
 import { LOGIN_ERRORS } from "@/app/zod-schemas/auth-schema-constants";
 
 const loginFormActions = new LoginFormActions();

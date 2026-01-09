@@ -1,5 +1,5 @@
-import { Base } from "../../common";
-import { signupFormSelectors } from "../utils";
+import { Base } from "../common";
+import { signupFormSelectors } from "./utils";
 
 const {
   signupBtn,
@@ -13,6 +13,7 @@ const {
 export class SignupFormActions extends Base {
   visit() {
     cy.visit("/auth");
+    cy.wait(1000);
     cy.getBySel(signupFormBtn).click();
     return this;
   }

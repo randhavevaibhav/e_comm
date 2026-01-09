@@ -15,6 +15,7 @@ declare global {
         selector: string,
         ...args: any[]
       ): Chainable<JQuery<HTMLElement>>;
+      waitForProgressBar(wait?:number): Chainable<JQuery<HTMLElement>>;
     }
   }
 }

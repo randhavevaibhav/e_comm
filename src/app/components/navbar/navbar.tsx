@@ -5,11 +5,10 @@ import { Logo } from "@/app/components/logo";
 import { ToggleTheme } from "@/app/components/theme-toggle";
 import { Button } from "@/app/components/ui/button";
 import { HomeIcon, MenuIcon, XIcon } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { MegaMenuItem } from "@/app/components/ui/mega-menu";
-import { productsCategories } from "./constants";
+import { MegaMenuItem } from "@/app/components/ui/mega-menu/mega-menu";
+import { productsCategoriesLinkList } from "./constants";
 import { LoginLogoutBtn } from "./login-logout-btn";
 import { PublicRoutes } from "./public-routes";
 import { ProtectedRoutes } from "./protected-routes";
@@ -29,7 +28,7 @@ export const Navbar = () => {
 
   if (isPathExcluded) {
     return (
-      <nav className="h-(--desktop-header-height) flex items-center  w-full justify-between px-4 py-2 border-b border-border">
+      <nav className="h-(--desktop-header-height) flex items-center  w-full justify-between px-4 py-1 border-b border-border fixed top-0 shadow">
         <Link href="/">
           <HomeIcon className="text-muted-foreground" />
         </Link>
@@ -87,9 +86,10 @@ export const Navbar = () => {
                   <li className=" place-content-center lg:py-0 py-3 max-lg:relative group ">
                     <MegaMenuItem
                       itemTitle="Products"
-                      categories={productsCategories}
+                      categories={productsCategoriesLinkList}
                       onClickCategoriesCb={closeMobileSidebar}
-                      itemTitleDataTest="products-nav-menu-item"
+                      itemTitleDataTest="mega-menu-toggle-products"
+                      megaMenuContainerDataTest="products-mega-menu"
                     />
                   </li>
 

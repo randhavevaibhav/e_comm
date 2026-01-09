@@ -1,4 +1,4 @@
-import { MegaMenuCategoryType } from "../ui/mega-menu";
+import { MegaMenuCategoryType } from "../ui/mega-menu/types";
 
   export const PUBLIC_ROUTES = [
     {
@@ -15,22 +15,23 @@ import { MegaMenuCategoryType } from "../ui/mega-menu";
   ];
 
 
-export const productsCategories:MegaMenuCategoryType[] = [
+export const productsCategoriesLinkList:MegaMenuCategoryType[] = [
   {
     title: "All",
     href: "/products",
-    dataTest:"products-page-link"
+
+  
   },
   {
     title: "Men",
     href: "/products/men",
     items: [
       {
-        name: "Shirts",
+        title: "Shirts",
         href: "/products/men/men-shirts",
       },
       {
-        name: "Pants",
+        title: "Pants",
         href: "/products/men/men-pants",
       },
     ],
@@ -40,11 +41,11 @@ export const productsCategories:MegaMenuCategoryType[] = [
     href: "/products/women",
     items: [
       {
-        name:  "Shirts",
+        title:  "Shirts",
         href: "/products/women/women-shirts",
       },
       {
-        name:  "Pants",
+        title:  "Pants",
         href: "/products/women/women-pants",
       },
     ],
@@ -54,11 +55,11 @@ export const productsCategories:MegaMenuCategoryType[] = [
     href: "/products/kids",
     items: [
       {
-        name:  "Shirts",
+        title:  "Shirts",
         href: "/products/kids/kids-shirts",
       },
       {
-        name:  "Pants",
+        title:  "Pants",
         href: "/products/kids/kids-pants",
       },
     ],

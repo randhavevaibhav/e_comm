@@ -3,7 +3,7 @@ import { getProductBySlug } from "@/services/product.service";
 
 import { serializePrisma } from "@/lib/utils";
 import { ProductCard } from "../../_products-components/product-card";
-import { ClientOnly } from "@/app/components/client-only";
+
 
 type ProductPageProps = {
   slug: string;

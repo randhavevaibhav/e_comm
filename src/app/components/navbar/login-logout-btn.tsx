@@ -36,6 +36,7 @@ export const LoginLogoutBtn = ({ className }: { className?: ClassValue }) => {
         "text-center cursor-pointer px-8 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full",
         className
       )}
+      data-test={"login-signup-link"}
     >
       Login&nbsp;/&nbsp;Signup
     </Link>

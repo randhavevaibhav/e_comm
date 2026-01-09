@@ -74,7 +74,7 @@ export const CartItem = ({ product }: CartItemProps) => {
 
                       decProductCount(product.id);
                     }}
-                    className="cursor-pointer text-lg px-2 h-full"
+                    className="cursor-pointer text-lg px-4 h-full"
                   >
                     -
                   </Button>
@@ -88,7 +88,7 @@ export const CartItem = ({ product }: CartItemProps) => {
 
                       incProductCount(product);
                     }}
-                    className="cursor-pointer text-lg px-2 h-full"
+                    className="cursor-pointer text-lg px-4 h-full"
                   >
                     +
                   </Button>

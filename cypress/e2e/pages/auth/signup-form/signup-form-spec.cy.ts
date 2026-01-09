@@ -1,5 +1,5 @@
-import { signupInterceptor } from "./actions/signup-form-actions";
-import { SignupFormActions } from "./actions/signup-form-actions";
+import { signupInterceptor } from "./signup-form-actions";
+import { SignupFormActions } from "./signup-form-actions";
 import { SIGNUP_ERRORS } from "@/app/zod-schemas/auth-schema-constants";
 
 const signupFormActions = new SignupFormActions();
