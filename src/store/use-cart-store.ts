@@ -81,8 +81,7 @@ const useCartStore = create<CartStore>()(
         });
         set({ totalItems: totalItems - 1 });
       },
-      clearCart: () =>
-        set({ cart: [], totalItems: 0, totalPrice: new Decimal(0) }),
+      clearCart: () =>set({ cart: [], totalItems: 0, totalPrice: new Decimal(0) }),
       getProductFromCart: (id) => {
         const { cart } = get();
 
@@ -95,7 +94,6 @@ const useCartStore = create<CartStore>()(
       },
       removeProductFromCart: (id) => {
         if (!id) return;
-
         const { cart, totalPrice, totalItems } = get();
         const productToRemove = cart.find((product) => product.id === id);
         if (!productToRemove) return;

@@ -10,5 +10,6 @@ export const productsPageSelectors = {
   totalCartItems:"total-cart-items",
   itemQuantity:"item-quantity",
   addItemBtn:"add-item-btn",
-  productCard:"product-card"
+  productCard:"product-card",
+  productPageHeading:"product-page-heading"
 };

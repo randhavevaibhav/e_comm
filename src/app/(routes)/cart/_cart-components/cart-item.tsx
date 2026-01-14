@@ -4,7 +4,6 @@ import { Button } from "@/app/components/ui/button";
 import { slugify } from "@/lib/utils";
 import { ProductWithCategorySubCategory } from "@/services/product.service";
 import { useCartStoreSelectors } from "@/store/use-cart-store";
-import { ShoppingBagIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Link } from "react-transition-progress/next";
@@ -32,7 +31,7 @@ export const CartItem = ({ product }: CartItemProps) => {
     product.subCategory.name
   )}/${slugify(product.slug)}`;
   return (
-    <Link href={productPath}>
+    <Link href={productPath} data-test={"cart-item"}>
       <div className="w-full grid lg:grid-cols-2 grid-cols-1 p-2">
         {/* item image,quantity, title, remove option */}
         <div className="flex gap-2">
@@ -50,20 +49,7 @@ export const CartItem = ({ product }: CartItemProps) => {
             <div className="text-indigo-500 w-full h-[34px] mt-2">
               {!mounted ? (
                 <div className=" bg-input animate-pulse rounded" />
-              ) : quantity === 0 ? (
-                <Button
-                  className="flex items-center justify-center gap-1  rounded font-medium"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-
-                    incProductCount(product);
-                  }}
-                >
-                  <ShoppingBagIcon />
-                  Add
-                </Button>
-              ) : (
+              ) :  (
                 <div className="flex items-center justify-center gap-2  rounded select-none border-border border">
                   {/* remove from cart button */}
                   <Button
@@ -75,10 +61,11 @@ export const CartItem = ({ product }: CartItemProps) => {
                       decProductCount(product.id);
                     }}
                     className="cursor-pointer text-lg px-4 h-full"
+                     data-test={"dec-item-count-btn"}
                   >
                     -
                   </Button>
-                  <span className="w-5 text-center">{quantity}</span>
+                  <span className="w-5 text-center" data-test={"item-quantity"} data-value={quantity}>{quantity}</span>
                   {/* add to cart button */}
                   <Button
                     variant="ghost"
@@ -89,6 +76,7 @@ export const CartItem = ({ product }: CartItemProps) => {
                       incProductCount(product);
                     }}
                     className="cursor-pointer text-lg px-4 h-full"
+                     data-test={"inc-item-count-btn"}
                   >
                     +
                   </Button>
@@ -110,7 +98,7 @@ export const CartItem = ({ product }: CartItemProps) => {
             "justify-self-end flex lg:flex-col justify-between max-lg:w-full my-2"
           }
         >
-          <p className="md:text-xl text-base font-medium text-indigo-500 text-end">
+          <p className="md:text-xl text-base font-medium text-indigo-500 text-end" data-test={'item-price'} data-value={product.price.toString()}>
             ${product.price.toString()}
           </p>
           <Button
@@ -120,6 +108,7 @@ export const CartItem = ({ product }: CartItemProps) => {
                e.stopPropagation();
               removeProductFromCart(product.id);
             }}
+            data-test={"remove-item-btn"}
           >
             Remove
           </Button>
