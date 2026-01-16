@@ -121,15 +121,16 @@ model CartItem {
 
 model Order {
   id              String   @id @default(cuid())
-  userId          String
   orderDate       DateTime @default(now())
-  status          String   @default("Pending") // e.g., Pending, Shipped, Delivered
+  status          String   @default("Pending")
   totalAmount     Float
-  shippingAddress String?
-  billingAddress  String?
-
-  user       User        @relation(fields: [userId], references: [id])
-  orderItems OrderItem[]
+  shippingAddress String
+  billingAddress  String
+  userId          String?
+  guestEmail      String?
+  guestName       String?
+  user            User?    @relation(fields: [userId], references: [id])
+  orderItems      OrderItem[]
 }
 
 model OrderItem {

@@ -2,7 +2,7 @@ import { CartPageActions } from "./cart-page-actions";
 
 const cartPageActions = new CartPageActions();
 
-describe("Products page tests.", () => {
+describe("cart page tests.", () => {
   beforeEach(() => {
     cartPageActions.visit();
   });
@@ -12,5 +12,12 @@ describe("Products page tests.", () => {
       .removeAllItems()
       .cartTotalShouldEq(0)
       .totalCartItemCountShouldEq(0);
+  }); 
+  it("should able to calculate and display correct total after adding or removing product.", () => {
+    cartPageActions
+      .incFirstItemCount()
+      .computeAndCompCartTotal()
+      .decFirstItemCount()
+      .computeAndCompCartTotal();
   });
 });

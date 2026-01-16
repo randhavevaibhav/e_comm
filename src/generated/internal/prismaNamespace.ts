@@ -1362,12 +1362,14 @@ export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typ
 
 export const OrderScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   orderDate: 'orderDate',
   status: 'status',
   totalAmount: 'totalAmount',
   shippingAddress: 'shippingAddress',
-  billingAddress: 'billingAddress'
+  billingAddress: 'billingAddress',
+  userId: 'userId',
+  guestEmail: 'guestEmail',
+  guestName: 'guestName'
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]

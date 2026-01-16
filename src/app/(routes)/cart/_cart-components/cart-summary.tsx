@@ -3,6 +3,7 @@ import { Button } from "@/app/components/ui/button";
 import { useCartStoreSelectors } from "@/store/use-cart-store";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
+import { Link } from "react-transition-progress/next";
 
 export const CartSummary = () => {
   const [mounted, setMounted] = useState(false);
@@ -19,9 +20,9 @@ export const CartSummary = () => {
         Total:&nbsp;{mounted &&decimalTotalPrice? <span data-test={'total-price'} data-value={decimalTotalPrice.toNumber()}>${decimalTotalPrice.toNumber()}</span> : <span>--</span>}
       </h3>
      
-        <Button size="lg" className={`block w-full`}>
+        <Link href={"/checkout"} className={`text-center cursor-pointer px-8 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full w-full`}>
         Checkout
-      </Button>
+      </Link>
      
     </div>
   );

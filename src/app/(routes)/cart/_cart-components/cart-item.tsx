@@ -31,7 +31,7 @@ export const CartItem = ({ product }: CartItemProps) => {
     product.subCategory.name
   )}/${slugify(product.slug)}`;
   return (
-    <Link href={productPath} data-test={"cart-item"}>
+    <Link href={productPath} data-test={"cart-item"} data-test-quantity={quantity} data-test-price={product.price}>
       <div className="w-full grid lg:grid-cols-2 grid-cols-1 p-2">
         {/* item image,quantity, title, remove option */}
         <div className="flex gap-2">
