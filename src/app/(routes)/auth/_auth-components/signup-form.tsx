@@ -5,13 +5,14 @@ import { useForm } from "react-hook-form";
 import {
   signupFormSchema,
   signupFormSchemaType,
-} from "@/app/zod-schemas/auth-schema";
+} from "@/app/(routes)/auth/_auth-components/schema/auth-schema";
 import { ErrorMessage } from "@/app/components/ui/error-message";
 import { cn } from "@/lib/utils";
 import { useAuth } from "../_auth-contexts/auth-context";
 import { useEffect } from "react";
 import { Input } from "@/app/components/ui/input";
-import { FormError, InputContainer } from "./auth-form";
+import { FormError } from "./auth-form";
+import { InputContainer } from "@/app/components/ui/input-container";
 import toast from "react-hot-toast";
 import { Logo } from "@/app/components/logo";
 import { Button } from "@/app/components/ui/button";

@@ -18,11 +18,17 @@ const BreadcrumbListItem = ({
   item: BreadcrumbListItem;
   isLastItem: boolean;
 }) => {
+  const dataTest = item.name.replaceAll(" ","-")+"-breadcrumb-link";
+  const dataTestPageHeading = item.name.replaceAll(" ","-")+"-page-heading";
   return (
+    
     <li className="flex items-center ">
       <Link
         href={item.href}
-        className="p-1 rounded-md font-medium tracking-wide hover:text-indigo-500 text-muted-foreground lg:text-base text-sm "
+        className="p-1 rounded-md breadcrumb-link font-medium tracking-wide hover:text-indigo-500 text-muted-foreground lg:text-base text-sm "
+        data-test={dataTest}
+        data-test-page-heading={dataTestPageHeading}
+
       >
         {capitalize(item.name)}
       </Link>

@@ -1,5 +1,5 @@
-import { LoginFormActions, loginInterceptor } from "./actions/login-form-actions";
-import { LOGIN_ERRORS } from "@/app/zod-schemas/auth-schema-constants";
+import { LoginFormActions, loginInterceptor } from "./login-form-actions";
+import { LOGIN_ERRORS } from "@/app/(routes)/auth/_auth-components/schema/auth-schema-constants";
 
 const loginFormActions = new LoginFormActions();
 

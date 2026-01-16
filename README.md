@@ -1,3 +1,7 @@
+### dev url -
+
+https://e-comm-git-dev-vaibhavs-projects-ad023c36.vercel.app/
+
 ## cmd to run in dev mode after prisma schema update
 
 npx prisma migrate dev --name added_new_features

@@ -8,10 +8,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   loginFormSchema,
   loginFormSchemaType,
-} from "@/app/zod-schemas/auth-schema";
+} from "@/app/(routes)/auth/_auth-components/schema/auth-schema";
 import { ErrorMessage } from "@/app/components/ui/error-message";
 import { cn } from "@/lib/utils";
-import { FormError, InputContainer } from "./auth-form";
+import { FormError } from "./auth-form";
+import { InputContainer } from "@/app/components/ui/input-container";
 import { Input } from "@/app/components/ui/input";
 import toast from "react-hot-toast";
 import { Logo } from "@/app/components/logo";

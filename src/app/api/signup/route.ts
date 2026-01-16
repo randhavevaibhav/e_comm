@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import * as bcrypt from "bcrypt";
 import { createUser, findUser } from "@/services/user.service";
 import { apiGlobalErrorHandler } from "@/lib/api-global-error-handler";
-import { signupFormSchema } from "@/app/zod-schemas/auth-schema";
+import { signupFormSchema } from "@/app/(routes)/auth/_auth-components/schema/auth-schema";
 import { withRateLimit } from "@/lib/rate-limiter";
 
 export const POST = apiGlobalErrorHandler(

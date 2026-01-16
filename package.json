@@ -17,6 +17,7 @@
     "bcrypt": "^6.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "decimal.js": "^10.6.0",
     "dotenv": "^17.2.3",
     "framer-motion": "^12.23.24",
     "ioredis": "^5.8.2",
@@ -31,7 +32,8 @@
     "react-hot-toast": "^2.6.0",
     "react-transition-progress": "^0.0.4",
     "tailwind-merge": "^3.4.0",
-    "zod": "^4.1.13"
+    "zod": "^4.1.13",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

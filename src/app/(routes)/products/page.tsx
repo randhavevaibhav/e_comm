@@ -7,11 +7,10 @@ export default async function ProductsPage() {
     <div>
       <h2
         className="font-semibold text-2xl my-2"
-        data-test={`products-page-header`}
       >
         Product page
       </h2>
-      <ProductList products={products} category="All Products" />
+      <ProductList products={products} category="products" />
     </div>
   );
 }
