@@ -5,17 +5,21 @@ const { loginBtn, signupFormBtn, signupHeader } = loginFormSelectors;
 export class LoginFormActions extends Base {
   visit() {
     cy.visit("/auth");
-    cy.wait(1000);
+    cy.waitForProgressBar();
     return this;
   }
 
   clickOnLoginBtn() {
+    cy.wait(1000);
     cy.getBySel(loginBtn).click();
+    cy.wait(1000);
     return this;
   }
 
   clickOnSignupFormBtn() {
+    cy.wait(1000);
     cy.getBySel(signupFormBtn).click();
+    cy.wait(1000);
     return this;
   }
   shouldShowSignupForm() {

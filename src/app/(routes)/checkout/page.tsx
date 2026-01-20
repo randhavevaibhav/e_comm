@@ -1,24 +1,24 @@
 import { Link } from "react-transition-progress/next";
-import { CheckoutSummary } from "./_checkout-components/checkout-summary";
 import { GuestCheckoutForm } from "./_checkout-components/guest-checkout-form";
+import { OrderSummary } from "@/app/components/order-summary/order-summary";
 
 const CheckoutPage = () => {
   return (
-    <div className="grid lg:grid-cols-[auto_500px] grid-cols-1 pt-2">
+    <div className="grid md:grid-cols-[6fr_2fr] grid-cols-1 gap-4 lg:p-6 p-3">
       <div>
-        <h2 className="text-2xl">Checkout</h2>
-        <p>
-          have a account? please log in{" "}
+        <h2 className="lg:text-5xl text-4xl font-semibold">Checkout</h2>
+       
+        <p className="my-2">
+          have a account? please log in&nbsp;
           <Link href={"/auth"} className="underline text-blue-500">
             here
           </Link>
         </p>
-
-        <h2 className="text-2xl">Guest Checkout</h2>
+    
         <GuestCheckoutForm/>
       </div>
       <div>
-        <CheckoutSummary/>
+        <OrderSummary/>
       </div>
     </div>
   );

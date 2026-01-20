@@ -44,3 +44,6 @@ BEGIN
     );
   END LOOP;
 END $$;
+
+# cmd to run headless cypress test
+npx cypress run --spec cypress/e2e/pages/checkout/checkout-page-spec.cy.ts
