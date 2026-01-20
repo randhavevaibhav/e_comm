@@ -1,4 +1,4 @@
-import "dotenv/config";
+import { loadEnvConfig } from "@next/env";
 import { defineConfig } from "cypress";
 import webpackPreprocessor from "@cypress/webpack-preprocessor";
 import path from "path";
@@ -6,6 +6,8 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const projectDir = process.cwd();
+loadEnvConfig(projectDir);
 
 const videoOptions = {
   development: false,
@@ -14,14 +16,23 @@ const videoOptions = {
 };
 
 export default defineConfig({
+  reporter: "cypress-mochawesome-reporter",
+  reporterOptions: {
+    charts: true,
+    reportPageTitle: "Custom Test Report",
+    embeddedScreenshots: true,
+    inlineAssets: true,
+    saveAllAttempts: false,
+  },
   e2e: {
     baseUrl: process.env.CYPRESS_CLIENT_URL,
     video: videoOptions[process.env.NODE_ENV],
     screenshotsFolder: "cypress/screenshots",
     videosFolder: "cypress/videos",
-     viewportWidth: 1280,
+    viewportWidth: 1280,
     viewportHeight: 720,
     setupNodeEvents(on, config) {
+       require('cypress-mochawesome-reporter/plugin')(on);
       const options = {
         webpackOptions: {
           resolve: {

@@ -127,5 +127,6 @@ export const useCartStoreSelectors = () => {
     getProductFromCart: useCartStore((state) => state.getProductFromCart),
     totalItems: useCartStore((state) => state.totalItems),
     totalPrice: useCartStore((state) => state.totalPrice),
+    clearCart: useCartStore((state) => state.clearCart),
   };
 };

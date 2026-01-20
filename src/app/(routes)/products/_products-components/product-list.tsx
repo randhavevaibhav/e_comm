@@ -14,7 +14,7 @@ export const ProductList = ({ category, products }: ProductListProps) => {
   return (
     <div>
        <h2 className="font-semibold text-2xl my-2" data-test={dataTestId}> {capitalize(category)}</h2>
-      <div className="border grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-x-2 gap-y-4 p-2">
+      <div className="border grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-x-2 gap-y-4 p-2 md:justify-items-normal justify-items-center">
         {products.map((product, idx) => {
           return (
             <ClientOnly  key={`${idx}_${product.id}`}>

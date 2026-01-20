@@ -45,6 +45,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "cypress": "^15.8.0",
+    "cypress-mochawesome-reporter": "^4.0.2",
     "prisma": "^7.1.0",
     "tailwindcss": "^4",
     "ts-loader": "^9.5.4",

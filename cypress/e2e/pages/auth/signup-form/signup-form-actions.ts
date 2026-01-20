@@ -13,13 +13,16 @@ const {
 export class SignupFormActions extends Base {
   visit() {
     cy.visit("/auth");
+    cy.waitForProgressBar();
     cy.wait(1000);
     cy.getBySel(signupFormBtn).click();
     return this;
   }
 
   clickOnSignupBtn() {
+    cy.wait(1000);
     cy.getBySel(signupBtn).click();
+    cy.wait(1000);
     return this;
   }
   enterUserName(str: string) {
@@ -36,7 +39,9 @@ export class SignupFormActions extends Base {
   }
 
   clickOnLoginFormBtn() {
+    cy.wait(1000);
     cy.getBySel(loginFormBtn).click();
+    cy.wait(1000);
     return this;
   }
   shouldShowLoginForm() {
