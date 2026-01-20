@@ -106,7 +106,7 @@ async function main() {
     {
       name: "High-Waisted Blue Jeans",
       price: 65.0,
-      slug: `${randomUUID()}_high-Waisted-blue-jeans`,
+      slug: `${randomUUID()}_high-waisted-blue-jeans`,
       targetGroup: "WOMEN",
       subCategoryId: subCategoryMap.get("women pants")!,
       stock: 90,
