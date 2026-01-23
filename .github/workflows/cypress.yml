@@ -77,3 +77,4 @@ jobs:
       CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
       CYPRESS_VIDEO_OPTION: ${{ secrets.CYPRESS_VIDEO_OPTION }}
       NODE_ENV: test
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
