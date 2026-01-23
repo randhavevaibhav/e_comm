@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { LoginForm } from "./login-form";
 import { SignupForm } from "./signup-form";
 import { cn } from "@/lib/utils";
@@ -21,17 +21,18 @@ export const AuthForm = () => {
 
   return (
     <>
-      {userAuthState === "login" ? (
-        <LoginForm setUserAuthStateToSignup={setUserAuthStateToSignup} />
-      ) : (
-        <SignupForm setUserAuthStateToLogin={setUserAuthStateToLogin} />
-      )}
+      <Suspense fallback={<p>Loading...</p>}>
+        {userAuthState === "login" ? (
+          <LoginForm setUserAuthStateToSignup={setUserAuthStateToSignup} />
+        ) : (
+          <SignupForm setUserAuthStateToLogin={setUserAuthStateToLogin} />
+        )}
+      </Suspense>
     </>
   );
 };
 
-
-export const FormError = ({ error }: { error: string|null }) => {
+export const FormError = ({ error }: { error: string | null }) => {
   return (
     <ErrorMessage
       className={cn(
