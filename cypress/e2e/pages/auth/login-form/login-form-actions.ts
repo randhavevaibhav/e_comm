@@ -27,17 +27,6 @@ export class LoginFormActions extends Base {
     cy.getBySel(signupHeader).should("be.visible");
   }
   checkAuthUserLogin() {
-    cy.intercept("**/api/**", (req) => {
-      req.on("response", (res) => {
-        if (res.statusCode >= 500) {
-          throw new Error(
-            `API ${req.method} ${req.url} failed with ${
-              res.statusCode
-            }\n${JSON.stringify(res.body)}`
-          );
-        }
-      });
-    });
     const loginInterAlias = loginInterceptor();
     this.enterEmail("test11@gmail.com")
       .enterPassword("123456")

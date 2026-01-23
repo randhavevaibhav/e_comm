@@ -12,7 +12,7 @@ loadEnvConfig(projectDir);
 const videoOptions = {
   development: false,
   production: false,
-  test: true,
+  test: false,
 };
 
 export default defineConfig({

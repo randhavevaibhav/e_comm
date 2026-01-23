@@ -31,3 +31,16 @@ Cypress.Commands.add("waitForProgressBar", (wait = 10000) => {
     timeout: wait,
   }).should("not.exist");
 });
+
+beforeEach(() => {
+  cy.intercept("**/api/**", (req) => {
+    req.on("response", (res) => {
+      if (res.statusCode >= 500) {
+        throw new Error(
+          `API ${req.method} ${req.url} failed with ${res.statusCode}\n` +
+            JSON.stringify(res.body, null, 2)
+        );
+      }
+    });
+  });
+});
