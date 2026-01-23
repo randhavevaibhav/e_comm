@@ -26,6 +26,18 @@ Cypress.Commands.add(
   }
 );
 
+cy.intercept("**/api/**", (req) => {
+  req.on("response", (res) => {
+    if (res.statusCode >= 400) {
+      throw new Error(
+        `API ${req.method} ${req.url} failed with ${
+          res.statusCode
+        }\n${JSON.stringify(res.body)}`
+      );
+    }
+  });
+});
+
 Cypress.Commands.add("waitForProgressBar", (wait = 10000) => {
   cy.get(".test-progress-bar", {
     timeout: wait,

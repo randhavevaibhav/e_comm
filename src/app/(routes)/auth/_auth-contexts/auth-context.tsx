@@ -88,11 +88,7 @@ export const AuthContextProvider = ({
       body: JSON.stringify({ email, password }),
     });
     if (!response.ok) {
-      const { message, error } = await response.json();
-
-      const stringifyError = JSON.stringify(error);
-      alert(error);
-      console.log("stringifyError ==> ", stringifyError);
+      const { message } = await response.json();
       setError(message);
       setLoading(false);
       return false;
