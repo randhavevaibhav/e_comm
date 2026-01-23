@@ -1,21 +1,9 @@
-import 'cypress-mochawesome-reporter/register';
+import "cypress-mochawesome-reporter/register";
 
 Cypress.Commands.add("getBySel", (selector, ...args) => {
   return cy.get(`[data-test=${selector}]`, ...args);
 });
 
-Cypress.on('window:before:load', (win) => {
-  const originalError = win.console.error
-
-  win.console.error = function (...args) {
-    Cypress.log({
-      name: 'console.error',
-      message: args,
-    })
-
-    originalError.apply(win.console, args)
-  }
-})
 Cypress.Commands.add("getBySelLike", (selector, ...args) => {
   return cy.get(`[data-test*=${selector}]`, ...args);
 });
