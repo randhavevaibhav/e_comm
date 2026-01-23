@@ -43,17 +43,6 @@ jobs:
           echo "REDIS_REST_TOKEN exists? ${REDIS_REST_TOKEN:+yes}"
           echo "NODE_ENV exists? ${NODE_ENV:+yes}"
 
-      - name: Check env vars
-        run: |
-          echo "DATABASE_URL exists? ${DATABASE_URL:+yes}"
-          echo "REDIS_HOST exists? ${REDIS_HOST:+yes}"
-          echo "REDIS_PORT exists? ${REDIS_PORT:+yes}"
-          echo "REDIS_PASSWORD exists? ${REDIS_PASSWORD:+yes}"
-          echo "REDIS_REST_TOKEN exists? ${REDIS_PASSWORD:+yes}"
-          echo "CLIENT URL exists? ${CYPRESS_CLIENT_URL:+yes}"
-          echo "User email exists? ${CYPRESS_USER_EMAIL:+yes}"
-          echo "User pass exists? ${CYPRESS_USER_PASSWORD:+yes}"
-          echo "CYPRESS_VIDEO_OPTION exists? ${CYPRESS_VIDEO_OPTION:+yes}"
       - name: Run Cypress
         uses: cypress-io/github-action@v6
         with:
@@ -87,3 +76,4 @@ jobs:
       CYPRESS_USER_EMAIL: ${{ secrets.CYPRESS_USER_EMAIL }}
       CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
       CYPRESS_VIDEO_OPTION: ${{ secrets.CYPRESS_VIDEO_OPTION }}
+      NODE_ENV: ${{ secrets.NODE_ENV }}
