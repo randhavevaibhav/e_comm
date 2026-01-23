@@ -1,5 +1,5 @@
 import { LoginFormActions, loginInterceptor } from "./login-form-actions";
-import { LOGIN_ERRORS } from "@/app/(routes)/auth/_auth-components/schema/auth-schema-constants";
+import { LOGIN_ERRORS } from "@/app/(routes)/auth/schema/index";
 
 const loginFormActions = new LoginFormActions();
 
@@ -54,4 +54,8 @@ describe("Login form tests", () => {
     loginFormActions
       .clickOnSignupFormBtn().shouldShowSignupForm()
   });
+  it("Should able login user with correct credentials and check for user avatar for confirmation.",()=>{
+    loginFormActions.checkAuthUserLogin();
+
+  })
 });

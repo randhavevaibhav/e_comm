@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   loginFormSchema,
-  loginFormSchemaType,
-} from "@/app/(routes)/auth/_auth-components/schema/auth-schema";
+  type loginFormSchemaType,
+} from "@/app/(routes)/auth/schema/index";
 import { ErrorMessage } from "@/app/components/ui/error-message";
 import { cn } from "@/lib/utils";
 import { FormError } from "./auth-form";
@@ -16,7 +16,7 @@ import { InputContainer } from "@/app/components/ui/input-container";
 import { Input } from "@/app/components/ui/input";
 import toast from "react-hot-toast";
 import { Logo } from "@/app/components/logo";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { Button } from "@/app/components/ui/button";
 
 type LoginFormProps = {
@@ -60,8 +60,49 @@ export const LoginForm = ({ setUserAuthStateToSignup }: LoginFormProps) => {
     }
   };
 
-  const emailFieldErrors = errors.email?.message;
-  const passwordFieldErrors = errors.password?.message;
+  const renderField = ({
+    name,
+    placeholder,
+    testId,
+    icon = "",
+  }: {
+    name: keyof loginFormSchemaType;
+    placeholder: string;
+    testId: string;
+    icon?: ReactNode;
+  }) => {
+    const error = errors[name]?.message as string | undefined;
+    return (
+      <>
+        <InputContainer loading={loading}>
+          {icon}
+          <Input
+            placeholder={placeholder}
+            {...register(name)}
+            className={cn({
+              "cursor-not-allowed": loading,
+            })}
+            
+            data-test={testId}
+            disabled={loading}
+            type={name==="password"?"password":"text"}
+          />
+        </InputContainer>
+        <ErrorMessage
+          className={cn(
+            "ml-2",
+            error
+              ? "opacity-100 visible"
+              : "opacity-0 invisible pointer-events-none",
+          )}
+          data-test={`${testId}-error`}
+        >
+          {error || "Error"}
+        </ErrorMessage>
+      </>
+    );
+  };
+
 
   return (
     <form
@@ -77,60 +118,20 @@ export const LoginForm = ({ setUserAuthStateToSignup }: LoginFormProps) => {
         </p>
       </header>
 
-      <InputContainer loading={loading}>
-        <MailIcon size={"18px"} className="text-[#6B7280]" />
-        <Input
-          placeholder="Email id"
-          disabled={loading}
-          autoComplete="email"
-          {...register("email")}
-          className={cn({
-            "cursor-not-allowed": loading,
-          })}
-          data-test={`email-input`}
-        />
-      </InputContainer>
+      {renderField({
+        name: "email",
+        placeholder: "Email id",
+        icon: <MailIcon size={"18px"} className="text-[#6B7280]" />,
+        testId: "email-input",
+      })}
 
-      <ErrorMessage
-        className={cn(
-          {
-            "opacity-100 visible": emailFieldErrors,
-            "opacity-0 invisible": !emailFieldErrors,
-          },
-          "ml-2"
-        )}
-        data-test={`email-input-error`}
-      >
-        {emailFieldErrors ? emailFieldErrors : `Errors`}
-      </ErrorMessage>
-      <InputContainer loading={loading}>
-        <LockIcon size={"18px"} className="text-[#6B7280]" />
+      {renderField({
+        name: "password",
+        placeholder: "Password",
+        icon: <LockIcon size={"18px"} className="text-[#6B7280]" />,
+        testId: "password-input",
+      })}
 
-        <Input
-          type="password"
-          placeholder="Password"
-          disabled={loading}
-          autoComplete="current-password"
-          {...register("password")}
-          className={cn({
-            "cursor-not-allowed": loading,
-          })}
-          data-test={`password-input`}
-        />
-      </InputContainer>
-
-      <ErrorMessage
-        className={cn(
-          {
-            "opacity-100 visible": passwordFieldErrors,
-            "opacity-0 invisible": !passwordFieldErrors,
-          },
-          "ml-2"
-        )}
-        data-test={`password-input-error`}
-      >
-        {passwordFieldErrors ? passwordFieldErrors : `Errors`}
-      </ErrorMessage>
       {/* need to implement */}
       {/* <div className="mt-4 text-left text-indigo-500">
                     <button className="text-sm" type="reset">Forget password?</button>

@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { User } from "@/generated/client";
-export const verifyJwtToken = (authToken: string | null) => {
+export const verifyJwtToken = (authToken: string | undefined) => {
   try {
     if (!authToken) {
       return null;
@@ -35,7 +35,7 @@ export function serializePrisma<T>(data: T): T {
   return JSON.parse(JSON.stringify(data));
 }
 
-export const protectedRoutes = ["/my-orders"];
+export const protectedRoutes = [""];
 
 export const authRoutes = ["/auth"];
 

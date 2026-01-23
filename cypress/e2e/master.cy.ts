@@ -2,6 +2,8 @@ import "@Cypress/e2e/pages/auth/login-form/login-form-spec.cy";
 import "@Cypress/e2e/pages/auth/signup-form/signup-form-spec.cy";
 import "@Cypress/e2e/pages/products/products-page-spec.cy";
 import "@Cypress/e2e/pages/cart/cart-page-spec.cy";
-import "@Cypress/e2e/pages/checkout/checkout-page-spec.cy";
+import "@Cypress/e2e/pages/checkout/guest-checkout-form/guest-checkout-form-spec.cy";
+import "@Cypress/e2e/pages/checkout/auth-user-checkout-form/auth-user-checkout-form-spec.cy";
+import "@Cypress/e2e/pages/my-orders/my-orders-page-specs.cy";
 import "@Cypress/e2e/components/navbar/navbar-specs.cy";
 

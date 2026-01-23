@@ -16,6 +16,7 @@ import { ProductSearch } from "./product-search";
 import { ShoppingCart } from "./shopping-cart";
 import { ClientOnly } from "../client-only";
 import { Link } from "react-transition-progress/next";
+import { UserAvatar } from "./user-avatar";
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -109,6 +110,7 @@ export const Navbar = () => {
             {/* Right-end side */}
             <div className="flex items-center lg:gap-8 gap-4">
               {/* shopping bag */}
+              <UserAvatar/>
 
               <ClientOnly>
                 <ShoppingCart />

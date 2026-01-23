@@ -41,11 +41,4 @@ export class Base {
   }
 }
 
-export const validateSessionInterceptor = () => {
-  const validateSessionInterceptorAlias = "validate-interceptor";
-  cy.intercept("GET", "/api/validate-session").as(
-    validateSessionInterceptorAlias
-  );
 
-  return validateSessionInterceptorAlias;
-};

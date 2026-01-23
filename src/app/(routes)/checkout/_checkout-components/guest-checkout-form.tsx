@@ -5,27 +5,39 @@ import { useForm } from "react-hook-form";
 import {
   guestCheckoutFormSchema,
   guestCheckoutFormSchemaType,
-} from "../schema/guest-checkout-form-schema";
+} from "@/app/(routes)/checkout/schema/index";
 import { InputContainer } from "@/app/components/ui/input-container";
 import { Input } from "@/app/components/ui/input";
 import { ErrorMessage } from "@/app/components/ui/error-message";
-import { cn } from "@/lib/utils";
+import { cn, sleep } from "@/lib/utils";
 import { Button } from "@/app/components/ui/button";
 import { useCartStoreSelectors } from "@/store/use-cart-store";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-transition-progress/next";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { createGuestOrderAction } from "@/lib/actions";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/app/components/dialog";
+import { CustomSuccessToast } from "@/app/components/ui/custom-success-toast";
 
 export const GuestCheckoutForm = () => {
   const { cart, totalPrice, clearCart } = useCartStoreSelectors();
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const {
     handleSubmit,
     register,
     reset,
     setValue,
+    trigger,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(guestCheckoutFormSchema),
@@ -61,48 +73,34 @@ export const GuestCheckoutForm = () => {
     );
   }
 
-  const submitOrder = async (formData: guestCheckoutFormSchemaType) => {
-    try {
-      const response = await fetch("/api/order/guest", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) {
-        const { message } = await response.json();
-        console.log(`Order submit failed with status ${response.status}`);
-        throw new Error(
-          `Error while submitting order ! 😕 \n${message ? message : ""}`,
-        );
-      }
-
-      toast.success(`Order submitted ! 😄`);
-      //clear local cart,reset form after success. and redirect to products page.
-
-      clearCart();
-      router.push("/products");
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log("Error ==> ", error);
-        toast.error(error.message);
-      } else {
-        console.log("Unknown Error ==> ", error);
-        toast.error(`Unknown error occurred !`);
-      }
-    }
-    reset();
-  };
-
   const onSubmit = async (formData: guestCheckoutFormSchemaType) => {
     setLoading(true);
-    await submitOrder(formData);
+
+    const res = await createGuestOrderAction(formData);
+
+    if (!res.errors) {
+      toast.custom((t) => (
+        <CustomSuccessToast
+          t={t}
+          message={res.message}
+          dataTest="order-success-toast"
+        />
+      ));
+
+      clearCart();
+      await sleep(500);
+      router.push("/products");
+    } else {
+      toast.error("Error while placing order !");
+      console.log("Error while placing order ! ");
+      console.log("Error ====> ", errors);
+    }
+    reset();
     setLoading(false);
   };
-  
+
   const renderField = (
-    name: keyof Omit<guestCheckoutFormSchemaType,"totalAmount"|"cart">,
+    name: keyof Omit<guestCheckoutFormSchemaType, "totalAmount" | "cart">,
     placeholder: string,
     testId: string,
   ) => {
@@ -121,7 +119,9 @@ export const GuestCheckoutForm = () => {
         <ErrorMessage
           className={cn(
             "ml-2",
-            error ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none",
+            error
+              ? "opacity-100 visible"
+              : "opacity-0 invisible pointer-events-none",
           )}
           data-test={`${testId}-error`}
         >
@@ -131,15 +131,19 @@ export const GuestCheckoutForm = () => {
     );
   };
 
+  const handleOpenDialog = async () => {
+    const isValid = await trigger();
+    if (isValid) {
+      setShowConfirm(true);
+    }
+  };
+
   return (
     <>
       <h2 className="lg:text-4xl text-3xl font-semibold lg:mt-8 mt-6">
         Guest Checkout
       </h2>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-1  w-full  border dark:bg-input/30 border-input shadow rounded-2xl px-4 pb-4 mt-2"
-      >
+      <form className="space-y-1  w-full  border dark:bg-input/30 border-input shadow rounded-2xl px-4 pb-4 mt-2">
         <header className="lg:text-3xl test-2xl my-2">
           <h3>Guest info</h3>
         </header>
@@ -155,15 +159,52 @@ export const GuestCheckoutForm = () => {
           "Enter shipping address",
           "shipping-address-input",
         )}
+
         <Button
-          size="xl"
+          size="lg"
           className="mx-auto block"
-          type="submit"
-          data-test={"submit-order-btn"}
+          type="button"
           disabled={isLoading}
+          onClick={handleOpenDialog}
+          data-test={"confirm-order-btn"}
         >
-          Submit Order
+          confirm Order
         </Button>
+        <Dialog
+          open={showConfirm}
+          onOpenChange={(open) => setShowConfirm(open)}
+        >
+          <DialogContent showCloseButton={false}>
+            <DialogHeader>
+              <DialogTitle>Are you sure to place order?</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex gap-4 lg:flex-row flex-col">
+              <Button
+                size="lg"
+                className=" lg:flex-1"
+                type="submit"
+                data-test={"submit-order-btn"}
+                disabled={isLoading}
+                onClick={handleSubmit(onSubmit)}
+              >
+                Submit Order
+              </Button>
+              <Button
+                size="lg"
+                className="block border lg:flex-1"
+                type="button"
+                variant="secondary"
+                disabled={isLoading}
+                onClick={() => setShowConfirm(false)}
+              >
+                cancel
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </form>
     </>
   );

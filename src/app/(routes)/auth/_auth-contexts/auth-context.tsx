@@ -1,12 +1,15 @@
 "use client";
 
 import {  protectedRoutes } from "@/lib/utils";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type AuthContextType = {
   user: {
     id: string;
+    name: string;
+    image: string | null;
+    email: string;
   } | null;
   signup: ({
     email,
@@ -41,9 +44,13 @@ export const AuthContextProvider = ({
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState<{
     id: string;
+    name: string ;
+    image: string | null;
+    email: string;
   } | null>(null);
   const router = useRouter();
   const pathname = usePathname();
+   const searchParams = useSearchParams();
 
   useEffect(() => {
     const validateSession = async () => {
@@ -76,6 +83,7 @@ export const AuthContextProvider = ({
   }) => {
     setError(null);
     setLoading(true);
+     const callbackUrl = searchParams.get("callbackUrl") || "/";
     const response = await fetch("/api/login", {
       method: "POST",
       headers: {
@@ -93,7 +101,7 @@ export const AuthContextProvider = ({
     const { user } = await response.json();
     setUser(user);
     setError(null);
-    router.push("/");
+    router.push(callbackUrl);
     setLoading(false);
     return true;
   };

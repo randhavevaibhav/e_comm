@@ -1,7 +1,8 @@
-import { checkoutPageSelectors } from "./utils";
-
+import { guestCheckoutFormSelectors } from "./utils";
+import { productsPageActions } from "@Cypress/e2e/pages/products/products-page-actions";
 const {
   submitOrderBtn,
+  confirmOrderBtn,
   guestEmailInput,
   guestEmailInputError,
   guestNameInput,
@@ -10,14 +11,24 @@ const {
   shippingAddressInputError,
   billingAddressInput,
   billingAddressInputError,
-} = checkoutPageSelectors;
+  orderSuccessToast,
+} = guestCheckoutFormSelectors;
 
-export class CheckoutPageActions {
+export class GuestCheckoutFormActions {
   visit() {
+    productsPageActions.visit();
+    productsPageActions.addNItemsToCart(5);
     cy.visit("/checkout");
     cy.waitForProgressBar();
     return this;
   }
+  clickOnConfirmOrderBtn() {
+    cy.wait(1000);
+    cy.getBySel(confirmOrderBtn).click();
+    cy.wait(1000);
+    return this;
+  }
+
   clickOnSubmitOrderBtn() {
     cy.wait(1000);
     cy.getBySel(submitOrderBtn).click();
@@ -57,18 +68,24 @@ export class CheckoutPageActions {
     return this;
   }
 
-   shouldShowShippingAddInputError(str: string) {
+  shouldShowShippingAddInputError(str: string) {
     cy.getBySel(shippingAddressInputError)
       .should("be.visible")
       .should("have.class", "visible")
       .should("have.text", str);
     return this;
   }
-   shouldShowBillingAddInputError(str: string) {
+  shouldShowBillingAddInputError(str: string) {
     cy.getBySel(billingAddressInputError)
       .should("be.visible")
       .should("have.class", "visible")
       .should("have.text", str);
     return this;
   }
+  shouldShowOrderSuccessToast() {
+    cy.getBySel(orderSuccessToast);
+    return this;
+  }
 }
+
+

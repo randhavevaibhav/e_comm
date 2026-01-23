@@ -11,7 +11,9 @@ import { MegaMenuCategoryType } from "../ui/mega-menu/types";
     {
       name: "My orders",
       href: "/my-orders",
+      dataTest:"my-orders-page-link"
     },
+    
   ];
 
 

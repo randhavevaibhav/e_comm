@@ -1,6 +1,6 @@
 import { signupInterceptor } from "./signup-form-actions";
 import { SignupFormActions } from "./signup-form-actions";
-import { SIGNUP_ERRORS } from "@/app/(routes)/auth/_auth-components/schema/auth-schema-constants";
+import { SIGNUP_ERRORS } from "@/app/(routes)/auth/schema/index";
 
 const signupFormActions = new SignupFormActions();
 

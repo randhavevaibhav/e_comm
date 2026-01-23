@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { findUser } from "@/services/user.service";
 import bcrypt from "bcrypt";
 import { apiGlobalErrorHandler } from "@/lib/api-global-error-handler";
-import { loginFormSchema } from "@/app/(routes)/auth/_auth-components/schema/auth-schema";
+import { loginFormSchema } from "@/app/(routes)/auth/schema/index";
 import { withRateLimit } from "@/lib/rate-limiter";
 
 export const POST = apiGlobalErrorHandler(
@@ -54,7 +54,7 @@ export const POST = apiGlobalErrorHandler(
     // create a JSON Web token
 
     const newToken = jwt.sign(user, process.env.JWT_SECRET, {
-      expiresIn: `50m`,
+      expiresIn: `20MIN`,
     });
 
     // 2. Set the cookie
@@ -62,7 +62,7 @@ export const POST = apiGlobalErrorHandler(
     cookieStore.set("session_token", newToken, {
       httpOnly: true, // Makes the cookie inaccessible via client-side JavaScript (more secure)
       secure: process.env.NODE_ENV === "production", // Only send over HTTPS in production
-      maxAge: 600, // Cookie expires in 1 day (in seconds)
+      maxAge: 24*60*60, // Cookie expires (in seconds)
       path: "/", // The path where the cookie is valid
       sameSite: "strict", // Helps mitigate CSRF attacks
     });

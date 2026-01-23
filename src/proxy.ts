@@ -5,7 +5,7 @@ import { authRoutes, protectedRoutes, verifyJwtToken } from "./lib/utils";
 
 const authMiddleware = async (request: NextRequest) => {
   const token = request.cookies.get("session_token");
-  const tokenValue = token ? token.value : null;
+  const tokenValue =token?.value;
 
   const isRequestingProtectedRoutes = protectedRoutes.includes(
     request.nextUrl.pathname
