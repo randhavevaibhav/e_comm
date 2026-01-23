@@ -41,6 +41,7 @@ jobs:
           echo "REDIS_PASSWORD exists? ${REDIS_PASSWORD:+yes}"
           echo "REDIS_PORT exists? ${REDIS_PORT:+yes}"
           echo "REDIS_REST_TOKEN exists? ${REDIS_REST_TOKEN:+yes}"
+          echo "NODE_ENV exists? ${NODE_ENV:+yes}"
 
       - name: Check env vars
         run: |

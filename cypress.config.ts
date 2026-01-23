@@ -10,7 +10,7 @@ const projectDir = process.cwd();
 loadEnvConfig(projectDir);
 
 const videoOptions = {
-  development: false,
+  development: true,
   production: false,
   test: false,
 };
@@ -32,7 +32,7 @@ export default defineConfig({
     viewportWidth: 1280,
     viewportHeight: 720,
     setupNodeEvents(on, config) {
-       require('cypress-mochawesome-reporter/plugin')(on);
+      require("cypress-mochawesome-reporter/plugin")(on);
       const options = {
         webpackOptions: {
           resolve: {
