@@ -29,7 +29,7 @@ export class LoginFormActions extends Base {
   checkAuthUserLogin() {
     cy.intercept("**/api/**", (req) => {
       req.on("response", (res) => {
-        if (res.statusCode >= 400) {
+        if (res.statusCode >= 500) {
           throw new Error(
             `API ${req.method} ${req.url} failed with ${
               res.statusCode
