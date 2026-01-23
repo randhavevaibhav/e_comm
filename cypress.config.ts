@@ -10,9 +10,9 @@ const projectDir = process.cwd();
 loadEnvConfig(projectDir);
 
 const videoOptions = {
-  development: true,
+  development: false,
   production: false,
-  test: false,
+  test: true,
 };
 
 export default defineConfig({

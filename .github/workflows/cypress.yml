@@ -76,4 +76,3 @@ jobs:
       CYPRESS_USER_EMAIL: ${{ secrets.CYPRESS_USER_EMAIL }}
       CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
       CYPRESS_VIDEO_OPTION: ${{ secrets.CYPRESS_VIDEO_OPTION }}
-      NODE_ENV: ${{ secrets.NODE_ENV }}
