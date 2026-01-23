@@ -1,6 +1,7 @@
 import { loginFormSelectors } from "./utils";
 import { Base } from "../common";
-const { loginBtn, signupFormBtn, signupHeader,userAvatar } = loginFormSelectors;
+const { loginBtn, signupFormBtn, signupHeader, userAvatar } =
+  loginFormSelectors;
 
 export class LoginFormActions extends Base {
   visit() {
@@ -26,16 +27,27 @@ export class LoginFormActions extends Base {
     cy.getBySel(signupHeader).should("be.visible");
   }
   checkAuthUserLogin() {
-     const loginInterAlias = loginInterceptor();
+    cy.intercept("**/api/**", (req) => {
+      req.on("response", (res) => {
+        if (res.statusCode >= 400) {
+          throw new Error(
+            `API ${req.method} ${req.url} failed with ${
+              res.statusCode
+            }\n${JSON.stringify(res.body)}`
+          );
+        }
+      });
+    });
+    const loginInterAlias = loginInterceptor();
     this.enterEmail("test11@gmail.com")
       .enterPassword("123456")
       .clickOnLoginBtn();
-   
+
     cy.wait(loginInterAlias);
     cy.waitForProgressBar();
-    
+
     //check for user avatar
-    cy.getBySel(userAvatar)
+    cy.getBySel(userAvatar);
     return this;
   }
 }
