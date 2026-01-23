@@ -42,7 +42,7 @@ export const apiGlobalErrorHandler = <T>(handler: ApiHandlerFunction<T>) => {
       // Centralized Internal Server Error Handling
       console.error("API Error:", error);
       return NextResponse.json(
-        { message: "Internal Server Error", error },
+        { message: "Internal Server Error", error: error.message },
         { status: 500 }
       );
     }
