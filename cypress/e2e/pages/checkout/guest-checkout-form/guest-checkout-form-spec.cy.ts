@@ -1,7 +1,5 @@
 import { checkoutInterceptor } from "@Cypress/utils";
-import {
-  GuestCheckoutFormActions,
-} from "./guest-checkout-form-actions";
+import { GuestCheckoutFormActions } from "./guest-checkout-form-actions";
 import { GUEST_CHECKOUT_FORM_ERRORS } from "@/app/(routes)/checkout/schema/index";
 
 const guestCheckoutFormActions = new GuestCheckoutFormActions();
@@ -18,7 +16,7 @@ const {
   miniBillingAdd,
   miniShippingAdd,
 } = GUEST_CHECKOUT_FORM_ERRORS;
-describe("Checkout page tests.", () => {
+describe("Guest checkout page tests.", () => {
   beforeEach(() => {
     guestCheckoutFormActions.visit();
   });
@@ -49,10 +47,10 @@ describe("Checkout page tests.", () => {
     guestCheckoutFormActions
       .enterGuestName("WERFGTYUIOWERFGTYUIO")
       .enterBillingAddress(
-        "WERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIO",
+        "WERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIO"
       )
       .enterShippingAddress(
-        "WERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIO",
+        "WERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIOWERFGTYUIO"
       )
       .clickOnConfirmOrderBtn()
       .shouldShowGuestNameInputError(maxGuestName)
@@ -71,7 +69,7 @@ describe("Checkout page tests.", () => {
   });
 
   it("Should submit guest checkout order form and show order success toast. ", () => {
-    const {checkoutInterAlias} = checkoutInterceptor();
+    const { checkoutInterAlias } = checkoutInterceptor();
     guestCheckoutFormActions
       .enterGuestName("Test 1234")
       .enterGuestEmail(`test234212@gmail.com`)
