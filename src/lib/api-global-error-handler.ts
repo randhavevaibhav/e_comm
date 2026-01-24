@@ -16,7 +16,11 @@ export const apiGlobalErrorHandler = <T>(handler: ApiHandlerFunction<T>) => {
       if (error instanceof RateLimiterRes) {
         const secondsToWait = Math.round(error.msBeforeNext / 1000);
         return NextResponse.json(
-          { message: `Too many requests retry after ${Math.round(secondsToWait/60)} m`,},
+          {
+            message: `Too many requests retry after ${Math.round(
+              secondsToWait / 60
+            )} m`,
+          },
           {
             status: 429,
             headers: { "Retry-After": String(secondsToWait) },
@@ -38,7 +42,7 @@ export const apiGlobalErrorHandler = <T>(handler: ApiHandlerFunction<T>) => {
       // Centralized Internal Server Error Handling
       console.error("API Error:", error);
       return NextResponse.json(
-        { message: "Internal Server Error" },
+        { message: "Internal Server Error", error: String(error) },
         { status: 500 }
       );
     }

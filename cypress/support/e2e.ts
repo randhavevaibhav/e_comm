@@ -1,9 +1,8 @@
-import 'cypress-mochawesome-reporter/register';
+import "cypress-mochawesome-reporter/register";
 
 Cypress.Commands.add("getBySel", (selector, ...args) => {
   return cy.get(`[data-test=${selector}]`, ...args);
 });
-
 
 Cypress.Commands.add("getBySelLike", (selector, ...args) => {
   return cy.get(`[data-test*=${selector}]`, ...args);
@@ -31,4 +30,17 @@ Cypress.Commands.add("waitForProgressBar", (wait = 10000) => {
   cy.get(".test-progress-bar", {
     timeout: wait,
   }).should("not.exist");
+});
+
+beforeEach(() => {
+  cy.intercept("**/api/**", (req) => {
+    req.on("response", (res) => {
+      if (res.statusCode >= 500) {
+        throw new Error(
+          `API ${req.method} ${req.url} failed with ${res.statusCode}\n` +
+            JSON.stringify(res.body, null, 2)
+        );
+      }
+    });
+  });
 });

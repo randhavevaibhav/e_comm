@@ -1,5 +1,5 @@
 import { LoginFormActions, loginInterceptor } from "./login-form-actions";
-import { LOGIN_ERRORS } from "@/app/(routes)/auth/_auth-components/schema/auth-schema-constants";
+import { LOGIN_ERRORS } from "@/app/(routes)/auth/schema/index";
 
 const loginFormActions = new LoginFormActions();
 
@@ -42,16 +42,20 @@ describe("Login form tests", () => {
     const loginInterAlias = loginInterceptor();
 
     loginFormActions
-    .enterEmail(`testYUOPrrt@gmail.com`)
-    .enterPassword(`12345678`)
+      .enterEmail(`testYUOPrrt@gmail.com`)
+      .enterPassword(`12345678`)
       .clickOnLoginBtn();
-    
+
     cy.wait(loginInterAlias);
-    loginFormActions.shouldShowSubmitFormError(`Error while submitting form !!`)
+    loginFormActions.shouldShowSubmitFormError(
+      `Error while submitting form !!`
+    );
   });
 
-   it("Should show signup form when clicked on signup from button", () => {
-    loginFormActions
-      .clickOnSignupFormBtn().shouldShowSignupForm()
+  it("Should show signup form when clicked on signup from button", () => {
+    loginFormActions.clickOnSignupFormBtn().shouldShowSignupForm();
+  });
+  it("Should able login user with correct credentials and check for user avatar for confirmation.", () => {
+    loginFormActions.checkAuthUserLogin();
   });
 });

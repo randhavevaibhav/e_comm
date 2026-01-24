@@ -1,12 +1,15 @@
 "use client";
 
-import {  protectedRoutes } from "@/lib/utils";
+import { protectedRoutes } from "@/lib/utils";
 import { useRouter, usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type AuthContextType = {
   user: {
     id: string;
+    name: string;
+    image: string | null;
+    email: string;
   } | null;
   signup: ({
     email,
@@ -41,6 +44,9 @@ export const AuthContextProvider = ({
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState<{
     id: string;
+    name: string;
+    image: string | null;
+    email: string;
   } | null>(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -48,19 +54,17 @@ export const AuthContextProvider = ({
   useEffect(() => {
     const validateSession = async () => {
       const response = await fetch("/api/validate-session");
-      //re-direct user to home page if session is invalid and 
+      //re-direct user to home page if session is invalid and
       //is trying to access protected routes
-      if (!response.ok&&protectedRoutes.includes(pathname)) {
-          router.push("/");
-          return;
+      if (!response.ok && protectedRoutes.includes(pathname)) {
+        router.push("/");
+        return;
       }
       const { user } = await response.json();
       setUser(user);
-    
     };
-   
-      validateSession();
 
+    validateSession();
   }, []);
 
   const clearError = () => {

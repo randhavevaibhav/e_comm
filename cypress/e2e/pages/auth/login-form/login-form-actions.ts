@@ -1,6 +1,7 @@
 import { loginFormSelectors } from "./utils";
 import { Base } from "../common";
-const { loginBtn, signupFormBtn, signupHeader } = loginFormSelectors;
+const { loginBtn, signupFormBtn, signupHeader, userAvatar } =
+  loginFormSelectors;
 
 export class LoginFormActions extends Base {
   visit() {
@@ -24,6 +25,19 @@ export class LoginFormActions extends Base {
   }
   shouldShowSignupForm() {
     cy.getBySel(signupHeader).should("be.visible");
+  }
+  checkAuthUserLogin() {
+    const loginInterAlias = loginInterceptor();
+    this.enterEmail("test11@gmail.com")
+      .enterPassword("123456")
+      .clickOnLoginBtn();
+
+    cy.wait(loginInterAlias);
+    cy.waitForProgressBar();
+
+    //check for user avatar
+    cy.getBySel(userAvatar);
+    return this;
   }
 }
 

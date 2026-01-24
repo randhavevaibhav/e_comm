@@ -30,8 +30,7 @@ export const AuthForm = () => {
   );
 };
 
-
-export const FormError = ({ error }: { error: string|null }) => {
+export const FormError = ({ error }: { error: string | null }) => {
   return (
     <ErrorMessage
       className={cn(

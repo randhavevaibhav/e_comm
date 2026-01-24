@@ -12,7 +12,7 @@ export const ProtectedRoutes = () => {
   return PROTECTED_ROUTES.map((route,idx) => {
     return (
       <li className="font-medium py-3 lg:hover:border-b lg:hover:border-indigo-500 lg:hover:text-indigo-500 transition-all" key={`${route.href}_${idx}`}>
-        <Link href={route.href}>{route.name}</Link>
+        <Link href={route.href} data-test={route.dataTest}>{route.name}</Link>
       </li>
     );
   });

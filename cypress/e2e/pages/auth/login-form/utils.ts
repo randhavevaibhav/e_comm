@@ -7,5 +7,6 @@ export const loginFormSelectors = {
   submitFormError: "submit-form-error",
   signupFormBtn: "signup-form-btn",
   signupHeader: "signup-header",
+  userAvatar:"user-avatar"
 };
 

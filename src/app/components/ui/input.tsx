@@ -7,7 +7,7 @@ type InputProps = ComponentPropsWithRef<"input"> & {
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const defaultClasses = `border-none outline-none ring-0 h-full disabled:cursor-not-allowed`;
+  const defaultClasses = `border-none outline-none ring-0 h-full disabled:cursor-not-allowed `;
   const { className, ...rest } = props;
 
   return (

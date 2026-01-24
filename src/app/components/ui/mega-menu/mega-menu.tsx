@@ -18,8 +18,6 @@ import { useProgress } from "react-transition-progress";
 import { useMobile } from "@/hooks/useMobile";
 import { MegaMenuCategoryType } from "./types";
 
-
-
 type MegaMenuToggleProps = ComponentPropsWithRef<"button"> & {
   children: React.ReactNode;
   callback?: () => void;
@@ -29,12 +27,12 @@ type MegaMenuToggleProps = ComponentPropsWithRef<"button"> & {
 const MegaMenuToggle = forwardRef<HTMLButtonElement, MegaMenuToggleProps>(
   (props, ref) => {
     const { children, callback, itemTitleDataTest } = props;
-    const { toggleMegaMenu, isMegaMenuOpen, openMegaMenu } =
+    const { toggleMegaMenu, isMegaMenuOpen, openMegaMenu, closeMegaMenu } =
       useMegaMenuContext();
     const isMobile = useMobile();
     return (
       <Button
-        className=" text-[15px] flex items-center outline-none lg:px-2 px-0 lg:hover:border-b lg:hover:border-indigo-500 lg:hover:text-indigo-500  transition-all font-medium rounded-none"
+        className=" text-[15px] flex items-center outline-none lg:px-2 px-0 lg:hover:border-b lg:hover:border-indigo-500 lg:hover:text-indigo-500  transition-all font-medium rounded-none py-12"
         onClick={(e) => {
           if (isMobile) {
             toggleMegaMenu();
@@ -44,6 +42,11 @@ const MegaMenuToggle = forwardRef<HTMLButtonElement, MegaMenuToggleProps>(
         onMouseEnter={() => {
           if (!isMobile) {
             openMegaMenu();
+          }
+        }}
+        onMouseLeave={() => {
+          if (!isMobile) {
+            closeMegaMenu();
           }
         }}
         aria-expanded={isMegaMenuOpen}
@@ -56,7 +59,7 @@ const MegaMenuToggle = forwardRef<HTMLButtonElement, MegaMenuToggleProps>(
         {children}
       </Button>
     );
-  }
+  },
 );
 
 type MegaMenuContainerProps = ComponentPropsWithRef<"button"> & {
@@ -66,38 +69,11 @@ type MegaMenuContainerProps = ComponentPropsWithRef<"button"> & {
 const MegaMenuContainer = forwardRef<HTMLButtonElement, MegaMenuContainerProps>(
   (props, ref) => {
     const { children } = props;
-    const { isMegaMenuOpen, closeMegaMenu } = useMegaMenuContext();
+    const { isMegaMenuOpen, closeMegaMenu, openMegaMenu } =
+      useMegaMenuContext();
     const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-      if (!isMegaMenuOpen) return;
 
-      const handleKeydown = (e: KeyboardEvent) =>
-        e.key === "Escape" && closeMegaMenu();
-      const handleClickOutside = (e: MouseEvent) => {
-        const isClickOutSide =
-          containerRef.current &&
-          !containerRef.current.contains(e.target as Node);
-
-        //required type check for forwarded ref
-        if (ref && typeof ref !== "function" && ref.current) {
-          if (ref.current.contains(e.target as Node)) {
-            return;
-          }
-        }
-
-        if (isClickOutSide) {
-          closeMegaMenu();
-        }
-      };
-
-      document.addEventListener("keydown", handleKeydown);
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("keydown", handleKeydown);
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [isMegaMenuOpen, closeMegaMenu]);
     return (
       <div
         className={cn(
@@ -105,17 +81,18 @@ const MegaMenuContainer = forwardRef<HTMLButtonElement, MegaMenuContainerProps>(
           {
             block: isMegaMenuOpen,
             hidden: !isMegaMenuOpen,
-          }
+          },
         )}
         ref={containerRef}
         onMouseLeave={closeMegaMenu}
+        onMouseEnter={openMegaMenu}
       >
         <div className="max-w-6xl mx-auto flex max-lg:flex-col gap-x-12 gap-y-6">
           {children}
         </div>
       </div>
     );
-  }
+  },
 );
 
 const MegaMenuSideImg = () => {
@@ -241,7 +218,7 @@ const useMegaMenuContext = () => {
 
   if (!contextValue) {
     throw new Error(
-      `Please use MegaMenuContext inside MegaMenuContext Provider.`
+      `Please use MegaMenuContext inside MegaMenuContext Provider.`,
     );
   }
   return contextValue;

@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { ClassValue } from "clsx";
 import { ComponentPropsWithRef, forwardRef } from "react";
 
-type VariantType = "outline"|"default"|"ghost"
+type VariantType = "outline"|"default"|"ghost"|"secondary"
 
 
 type ButtonProps = ComponentPropsWithRef<"button"> & {
@@ -16,6 +16,7 @@ const getVariantClasses = (variant:VariantType = "default") => {
   const variants = {
     outline: "bg-inherit text-inherit border rounded-md",
     default: "bg-indigo-500 hover:bg-indigo-600 hover:opacity-90 transition-opacity",
+    secondary:"bg-accent-foreground text-accent hover:opacity-90 transition-opacity",
     ghost:"bg-inherit text-inherit"
   };
 
