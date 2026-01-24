@@ -18,6 +18,10 @@ npx prisma generate
 
 npx prisma db seed
 
+## cmd for wipe data
+
+npx prisma migrate reset
+
 ## include all api routes in global api error handler like
 
 apiGlobalErrorHandler(async (request)=>{})
@@ -46,4 +50,5 @@ BEGIN
 END $$;
 
 # cmd to run headless cypress test
+
 npx cypress run --spec cypress/e2e/pages/checkout/checkout-page-spec.cy.ts
